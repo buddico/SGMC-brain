@@ -1,0 +1,78 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: sgmc_brain
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5440:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8090 --reload
+    ports:
+      - "8090:8090"
+    volumes:
+      - ../backend/app:/app/app:ro
+      - ../backend/alembic:/app/alembic:ro
+      - ../backend/scripts:/app/scripts:ro
+      - uploads:/data/uploads
+      - policies:/data/policies
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/sgmc_brain
+      REDIS_URL: redis://redis:6379/0
+      CF_ACCESS_REQUIRED: "false"
+      DEV_AUTH_EMAIL: dev@stroudgreenmedical.co.uk
+      DEV_AUTH_NAME: Dev User
+      STAFF_API_URL: http://host.docker.internal:8080/api
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  agent:
+    build:
+      context: ../agent
+      dockerfile: Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8091 --reload
+    ports:
+      - "8091:8091"
+    volumes:
+      - ../agent:/app:ro
+    environment:
+      AGENT_BRAIN_API_URL: http://api:8090/api
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  uploads:
+  policies:

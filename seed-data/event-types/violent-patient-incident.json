@@ -1,0 +1,253 @@
+{
+  "name": "Violent/Abusive Patient Incident",
+  "version": "1.0.0",
+  "description": "Report violent, abusive, or threatening behavior from patients. Includes warning letters and immediate deduction pathways.",
+  "status": "active",
+  "json_schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": ["patient_id", "date_of_incident", "location", "description", "harm_to_staff"],
+    "properties": {
+      "patient_id": {
+        "type": "string",
+        "title": "Patient EMIS Number",
+        "description": "Patient identifier (will be hashed for storage)"
+      },
+      "patient_age": {
+        "type": "integer",
+        "title": "Patient Age",
+        "minimum": 0,
+        "maximum": 120
+      },
+      "patient_gender": {
+        "type": "string",
+        "title": "Patient Gender",
+        "enum": ["M", "F", "O"],
+        "enumNames": ["Male", "Female", "Other"]
+      },
+      "date_of_incident": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Date & Time of Incident"
+      },
+      "location": {
+        "type": "string",
+        "title": "Location",
+        "enum": ["reception", "consulting_room", "phone", "home_visit", "other"],
+        "enumNames": ["Reception", "Consulting Room", "Phone", "Home Visit", "Other"]
+      },
+      "witnesses": {
+        "type": "array",
+        "title": "Witnesses",
+        "items": {
+          "type": "object",
+          "properties": {
+            "full_name": {
+              "type": "string",
+              "title": "Full Name"
+            },
+            "contact": {
+              "type": "string",
+              "title": "Contact (optional)"
+            }
+          },
+          "required": ["full_name"]
+        }
+      },
+      "description": {
+        "type": "string",
+        "title": "Description of Incident",
+        "description": "Detailed account of what happened",
+        "minLength": 20
+      },
+      "harm_to_staff": {
+        "type": "object",
+        "title": "Harm to Staff",
+        "required": ["level"],
+        "properties": {
+          "level": {
+            "type": "string",
+            "title": "Level of Harm",
+            "enum": ["none", "minor", "moderate", "severe"],
+            "enumNames": ["None", "Minor", "Moderate", "Severe"]
+          },
+          "details": {
+            "type": "string",
+            "title": "Details (if applicable)"
+          }
+        }
+      },
+      "harm_to_patient": {
+        "type": "object",
+        "title": "Harm to Patient",
+        "required": ["level"],
+        "properties": {
+          "level": {
+            "type": "string",
+            "title": "Level of Harm",
+            "enum": ["none", "minor", "moderate", "severe"],
+            "enumNames": ["None", "Minor", "Moderate", "Severe"]
+          },
+          "details": {
+            "type": "string",
+            "title": "Details (if applicable)"
+          }
+        }
+      },
+      "actions": {
+        "type": "object",
+        "title": "Actions Taken",
+        "oneOf": [
+          {
+            "title": "Warning Letter Issued",
+            "properties": {
+              "action_type": {
+                "type": "string",
+                "enum": ["warning_letter"],
+                "default": "warning_letter"
+              },
+              "warning_letter": {
+                "type": "object",
+                "required": ["issued_date", "warning_type"],
+                "properties": {
+                  "issued_date": {
+                    "type": "string",
+                    "format": "date",
+                    "title": "Date Issued"
+                  },
+                  "expiry_date": {
+                    "type": "string",
+                    "format": "date",
+                    "title": "Expiry Date (default 12 months from issue)"
+                  },
+                  "warning_type": {
+                    "type": "string",
+                    "title": "Type of Warning",
+                    "enum": ["communication", "verbal_abuse", "threat"],
+                    "enumNames": ["Communication Issues", "Verbal Abuse", "Threat"]
+                  },
+                  "threat_type": {
+                    "type": "string",
+                    "title": "Type of Threat (if applicable)"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Immediate Deduction",
+            "properties": {
+              "action_type": {
+                "type": "string",
+                "enum": ["immediate_deduction"],
+                "default": "immediate_deduction"
+              },
+              "immediate_deduction": {
+                "type": "object",
+                "required": ["pcse_informed", "patient_informed", "reasons"],
+                "properties": {
+                  "pcse_informed": {
+                    "type": "boolean",
+                    "title": "PCSE Informed?",
+                    "default": false
+                  },
+                  "patient_informed": {
+                    "type": "boolean",
+                    "title": "Patient Informed?",
+                    "default": false
+                  },
+                  "reasons": {
+                    "type": "array",
+                    "title": "Reasons for Deduction",
+                    "items": {
+                      "type": "string",
+                      "enum": ["serious_immediate_risk", "persistent_abuse", "other"],
+                      "enumNames": ["Serious & Immediate Risk", "Persistent/Egregious Abuse", "Other"]
+                    },
+                    "uniqueItems": true,
+                    "minItems": 1
+                  },
+                  "other_reason": {
+                    "type": "string",
+                    "title": "Other Reason (if selected)"
+                  },
+                  "police_informed": {
+                    "type": "boolean",
+                    "title": "Police Informed?",
+                    "default": false
+                  },
+                  "police_reference": {
+                    "type": "string",
+                    "title": "Police Reference Number"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "mitigation": {
+        "type": "string",
+        "title": "Mitigations Implemented",
+        "description": "What steps have been taken to prevent recurrence?"
+      },
+      "other_staff_involved": {
+        "type": "array",
+        "title": "Other Staff Involved",
+        "description": "Select other staff members who witnessed or were involved in this incident",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "reflection": {
+        "type": "string",
+        "title": "Personal Reflection (private)",
+        "description": "Your reflections on the incident (visible only to you and managers)"
+      }
+    }
+  },
+  "ui_schema": {
+    "description": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 5
+      }
+    },
+    "harm_to_staff": {
+      "details": {
+        "ui:widget": "textarea"
+      }
+    },
+    "harm_to_patient": {
+      "details": {
+        "ui:widget": "textarea"
+      }
+    },
+    "mitigation": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 3
+      }
+    },
+    "reflection": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 4
+      }
+    },
+    "actions": {
+      "warning_letter": {
+        "threat_type": {
+          "ui:help": "Only complete if warning type is 'Threat'"
+        }
+      },
+      "immediate_deduction": {
+        "police_reference": {
+          "ui:help": "Required if police were informed"
+        }
+      }
+    }
+  },
+  "tags": ["violence", "patient-behavior", "staff-safety"]
+}

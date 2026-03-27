@@ -1,0 +1,188 @@
+{
+  "name": "Near Miss",
+  "version": "1.0.0",
+  "description": "Report near misses - incidents that could have resulted in harm but didn't. Critical for learning and prevention.",
+  "status": "active",
+  "json_schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": [
+      "event_title",
+      "date_of_incident",
+      "description",
+      "what_prevented_harm"
+    ],
+    "dependencies": {
+      "patient_involved": {
+        "oneOf": [
+          {
+            "properties": {
+              "patient_involved": {
+                "enum": [false]
+              }
+            }
+          },
+          {
+            "properties": {
+              "patient_involved": {
+                "enum": [true]
+              },
+              "patient_id": {
+                "type": "string",
+                "title": "Patient EMIS Number"
+              },
+              "patient_age": {
+                "type": "integer",
+                "title": "Patient Age"
+              },
+              "patient_gender": {
+                "type": "string",
+                "title": "Patient Gender",
+                "enum": ["M", "F", "O"]
+              }
+            },
+            "required": ["patient_id"]
+          }
+        ]
+      }
+    },
+    "properties": {
+      "event_title": {
+        "type": "string",
+        "title": "Event Title"
+      },
+      "date_of_incident": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Date & Time"
+      },
+      "patient_involved": {
+        "type": "boolean",
+        "title": "Patient Involved?",
+        "default": false
+      },
+      "category": {
+        "type": "string",
+        "title": "Category",
+        "enum": [
+          "medication",
+          "diagnosis",
+          "procedure",
+          "communication",
+          "administrative",
+          "technical",
+          "other"
+        ],
+        "enumNames": [
+          "Medication",
+          "Diagnosis",
+          "Procedure",
+          "Communication",
+          "Administrative",
+          "Technical/IT",
+          "Other"
+        ]
+      },
+      "description": {
+        "type": "string",
+        "title": "What Happened?",
+        "minLength": 20
+      },
+      "what_prevented_harm": {
+        "type": "string",
+        "title": "What Prevented Harm?",
+        "description": "How was this caught/prevented?"
+      },
+      "potential_severity": {
+        "type": "string",
+        "title": "Potential Severity (if not caught)",
+        "enum": [
+          "minor",
+          "moderate",
+          "severe",
+          "catastrophic"
+        ],
+        "enumNames": [
+          "Minor",
+          "Moderate",
+          "Severe",
+          "Catastrophic"
+        ]
+      },
+      "contributing_factors": {
+        "type": "string",
+        "title": "Contributing Factors"
+      },
+      "learning_points": {
+        "type": "string",
+        "title": "Learning Points",
+        "description": "What can we learn to prevent this in future?"
+      },
+      "actions_recommended": {
+        "type": "string",
+        "title": "Recommended Actions"
+      },
+      "shared_with_team": {
+        "type": "boolean",
+        "title": "Shared with Team?",
+        "default": false
+      },
+      "other_staff_involved": {
+        "type": "array",
+        "title": "Other Staff Involved",
+        "description": "Select other staff members who were involved in this near miss",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "reflection": {
+        "type": "string",
+        "title": "Personal Reflection (private)"
+      }
+    }
+  },
+  "ui_schema": {
+    "description": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 5
+      }
+    },
+    "what_prevented_harm": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 3
+      }
+    },
+    "contributing_factors": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 3
+      }
+    },
+    "learning_points": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 4
+      }
+    },
+    "actions_recommended": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 3
+      }
+    },
+    "reflection": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 4
+      }
+    }
+  },
+  "tags": [
+    "near-miss",
+    "prevention",
+    "learning"
+  ]
+}

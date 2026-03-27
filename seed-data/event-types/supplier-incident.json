@@ -1,0 +1,137 @@
+{
+  "name": "Supplier/IT Incident",
+  "version": "1.0.0",
+  "description": "Report incidents involving third-party suppliers, IT systems, telephony, or other critical services.",
+  "status": "active",
+  "json_schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": ["incident_title", "date_of_incident", "supplier", "service_type", "description"],
+    "properties": {
+      "incident_title": {
+        "type": "string",
+        "title": "Incident Title"
+      },
+      "date_of_incident": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Date & Time Incident Started"
+      },
+      "resolved_at": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Date & Time Resolved (if applicable)"
+      },
+      "supplier": {
+        "type": "string",
+        "title": "Supplier/Service Name",
+        "enum": ["emis", "docman", "telephony", "internet_provider", "pathology", "radiology", "pharmacy", "other"],
+        "enumNames": ["EMIS", "DocMan", "Telephony System", "Internet Provider", "Pathology Lab", "Radiology Service", "Pharmacy", "Other"]
+      },
+      "supplier_other": {
+        "type": "string",
+        "title": "Supplier Name (if Other)"
+      },
+      "service_type": {
+        "type": "string",
+        "title": "Service Type",
+        "enum": ["it_system", "telephony", "laboratory", "imaging", "pharmacy", "maintenance", "other"],
+        "enumNames": ["IT System", "Telephony", "Laboratory Services", "Imaging Services", "Pharmacy Services", "Maintenance", "Other"]
+      },
+      "description": {
+        "type": "string",
+        "title": "Description of Incident",
+        "minLength": 20
+      },
+      "impact_on_care": {
+        "type": "object",
+        "title": "Impact on Patient Care",
+        "properties": {
+          "patients_affected": {
+            "type": "string",
+            "title": "Number/Type of Patients Affected",
+            "enum": ["none", "1-5", "6-20", "21-50", "50+"],
+            "enumNames": ["None", "1-5 patients", "6-20 patients", "21-50 patients", "More than 50"]
+          },
+          "care_delayed": {
+            "type": "boolean",
+            "title": "Was patient care delayed?",
+            "default": false
+          },
+          "details": {
+            "type": "string",
+            "title": "Impact Details"
+          }
+        }
+      },
+      "workarounds": {
+        "type": "string",
+        "title": "Workarounds Implemented",
+        "description": "How did you manage during the outage?"
+      },
+      "sla_breach": {
+        "type": "boolean",
+        "title": "SLA Breach?",
+        "default": false
+      },
+      "sla_details": {
+        "type": "string",
+        "title": "SLA Breach Details"
+      },
+      "supplier_notified": {
+        "type": "boolean",
+        "title": "Supplier Notified?",
+        "default": false
+      },
+      "supplier_reference": {
+        "type": "string",
+        "title": "Supplier Reference/Ticket Number"
+      },
+      "root_cause": {
+        "type": "string",
+        "title": "Root Cause (if known)"
+      },
+      "actions_required": {
+        "type": "string",
+        "title": "Actions Required",
+        "description": "What needs to happen to prevent recurrence?"
+      },
+      "other_staff_involved": {
+        "type": "array",
+        "title": "Other Staff Involved",
+        "description": "Select other staff members who were affected by this incident",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      }
+    }
+  },
+  "ui_schema": {
+    "description": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 5
+      }
+    },
+    "workarounds": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 3
+      }
+    },
+    "root_cause": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 3
+      }
+    },
+    "actions_required": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 3
+      }
+    }
+  },
+  "tags": ["supplier", "it", "service-interruption"]
+}

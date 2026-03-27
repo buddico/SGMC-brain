@@ -1,0 +1,262 @@
+{
+  "name": "Significant Event",
+  "version": "1.0.0",
+  "description": "Report significant events for clinical governance and learning. Includes SEA (Significant Event Analysis) framework.",
+  "status": "active",
+  "json_schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": ["event_title", "date_of_incident", "description", "severity"],
+    "dependencies": {
+      "patient_involved": {
+        "oneOf": [
+          {
+            "properties": {
+              "patient_involved": {
+                "enum": [false]
+              }
+            }
+          },
+          {
+            "properties": {
+              "patient_involved": {
+                "enum": [true]
+              },
+              "patient_id": {
+                "type": "string",
+                "title": "Patient EMIS Number"
+              },
+              "patient_age": {
+                "type": "integer",
+                "title": "Patient Age"
+              },
+              "patient_gender": {
+                "type": "string",
+                "title": "Patient Gender",
+                "enum": ["M", "F", "O"]
+              }
+            },
+            "required": ["patient_id"]
+          }
+        ]
+      },
+      "discussed_at_meeting": {
+        "oneOf": [
+          {
+            "properties": {
+              "discussed_at_meeting": {
+                "enum": [false]
+              }
+            }
+          },
+          {
+            "properties": {
+              "discussed_at_meeting": {
+                "enum": [true]
+              },
+              "meeting_date": {
+                "type": "string",
+                "format": "date",
+                "title": "Clinical Meeting Date"
+              },
+              "meeting_outcome": {
+                "type": "object",
+                "title": "Clinical Meeting Outcome",
+                "properties": {
+                  "outcome_summary": {
+                    "type": "string",
+                    "title": "Outcome Summary"
+                  },
+                  "learning_points": {
+                    "type": "string",
+                    "title": "Learning Points from Discussion"
+                  },
+                  "agreed_actions": {
+                    "type": "array",
+                    "title": "Actions Agreed at Meeting",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "action": {"type": "string", "title": "Action"},
+                        "responsible_person": {"type": "string", "title": "Responsible Person"},
+                        "deadline": {"type": "string", "format": "date", "title": "Deadline"}
+                      }
+                    }
+                  },
+                  "follow_up_required": {
+                    "type": "boolean",
+                    "title": "Follow-up Meeting Required?",
+                    "default": false
+                  }
+                },
+                "required": ["outcome_summary"]
+              }
+            },
+            "required": ["meeting_date", "meeting_outcome"]
+          }
+        ]
+      }
+    },
+    "properties": {
+      "event_title": {
+        "type": "string",
+        "title": "Event Title",
+        "description": "Brief summary of the event"
+      },
+      "date_of_incident": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Date & Time of Event"
+      },
+      "patient_involved": {
+        "type": "boolean",
+        "title": "Patient Involved?",
+        "default": false
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": ["minor", "moderate", "severe", "catastrophic"],
+        "enumNames": ["Minor (no harm)", "Moderate (minor harm)", "Severe (major harm)", "Catastrophic (death/permanent harm)"]
+      },
+      "category": {
+        "type": "string",
+        "title": "Event Category",
+        "enum": ["clinical", "medication", "diagnosis", "communication", "administrative", "technical", "other"],
+        "enumNames": ["Clinical Care", "Medication Error", "Diagnostic Error", "Communication Failure", "Administrative", "Technical/IT", "Other"]
+      },
+      "description": {
+        "type": "string",
+        "title": "What Happened?",
+        "description": "Detailed description of the event",
+        "minLength": 20
+      },
+      "contributing_factors": {
+        "type": "string",
+        "title": "Contributing Factors",
+        "description": "What factors contributed to this event?"
+      },
+      "immediate_actions": {
+        "type": "string",
+        "title": "Immediate Actions Taken"
+      },
+      "harm_assessment": {
+        "type": "object",
+        "title": "Harm Assessment",
+        "properties": {
+          "patient_harm": {
+            "type": "boolean",
+            "title": "Did patient experience harm?",
+            "default": false
+          },
+          "harm_details": {
+            "type": "string",
+            "title": "Harm Details"
+          },
+          "duty_of_candour_required": {
+            "type": "boolean",
+            "title": "Duty of Candour Required?",
+            "default": false
+          },
+          "duty_of_candour_completed": {
+            "type": "boolean",
+            "title": "Duty of Candour Completed?"
+          }
+        }
+      },
+      "learning_outcomes": {
+        "type": "string",
+        "title": "Learning Outcomes",
+        "description": "What did we learn from this event?"
+      },
+      "actions_planned": {
+        "type": "array",
+        "title": "Actions Planned",
+        "items": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "title": "Action"
+            },
+            "responsible_person": {
+              "type": "string",
+              "title": "Responsible Person"
+            },
+            "deadline": {
+              "type": "string",
+              "format": "date",
+              "title": "Deadline"
+            }
+          }
+        }
+      },
+      "discussed_at_meeting": {
+        "type": "boolean",
+        "title": "Discussed at Clinical Meeting?",
+        "default": false
+      },
+      "other_staff_involved": {
+        "type": "array",
+        "title": "Other Staff Involved",
+        "description": "Select other staff members who were involved in this event",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "reflection": {
+        "type": "string",
+        "title": "Personal Reflection (private)",
+        "description": "Your reflections on the event"
+      }
+    }
+  },
+  "ui_schema": {
+    "description": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 5
+      }
+    },
+    "contributing_factors": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 3
+      }
+    },
+    "immediate_actions": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 3
+      }
+    },
+    "learning_outcomes": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 4
+      }
+    },
+    "reflection": {
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 4
+      }
+    },
+    "meeting_outcome": {
+      "outcome_summary": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "rows": 3
+        }
+      },
+      "learning_points": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "rows": 3
+        }
+      }
+    }
+  },
+  "tags": ["significant-event", "clinical-governance", "learning"]
+}

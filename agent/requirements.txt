@@ -1,0 +1,18 @@
+# Claude Agent SDK
+claude-agent-sdk>=0.1.50
+
+# HTTP client for API calls and GOV.UK fetching
+httpx>=0.28.0
+
+# Scheduling
+apscheduler>=3.10.0
+
+# Async
+anyio>=4.0.0
+
+# Config
+pydantic-settings>=2.7.0
+
+# Agent runtime API
+fastapi>=0.115.0
+uvicorn[standard]>=0.34.0

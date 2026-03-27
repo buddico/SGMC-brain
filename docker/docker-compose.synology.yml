@@ -1,0 +1,71 @@
+# Synology production deployment - all host networking
+# Ports: db=5440, redis=6380, api=8090, frontend=8120
+
+services:
+  db:
+    image: postgres:16-alpine
+    network_mode: host
+    environment:
+      POSTGRES_DB: sgmc_brain
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGPORT: "5440"
+    volumes:
+      - /volume1/docker/sgmc-brain/pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -p 5440"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    network_mode: host
+    command: redis-server --port 6380
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6380", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    network_mode: host
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@127.0.0.1:5440/sgmc_brain
+      REDIS_URL: redis://127.0.0.1:6380/0
+      CF_ACCESS_REQUIRED: "true"
+      CF_ACCESS_TEAM_DOMAIN: buddico
+      STAFF_API_URL: http://127.0.0.1:8080/api
+      UPLOAD_DIR: /data/uploads
+      POLICY_DIR: /data/policies
+    volumes:
+      - /volume1/docker/sgmc-brain/uploads:/data/uploads
+      - /volume1/docker/sgmc-brain/policies:/data/policies
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8090/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    network_mode: host
+    environment:
+      HOSTNAME: "0.0.0.0"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
