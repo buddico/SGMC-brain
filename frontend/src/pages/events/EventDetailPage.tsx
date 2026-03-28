@@ -6,10 +6,11 @@ import { LinkSelector } from '@/components/LinkSelector'
 import {
   ArrowLeft, FileText, ShieldAlert, History, Save, Loader2,
   Plus, Check, UserPlus, MessageSquare, BookOpen, Lock, Sparkles, X, Users,
+  Search, ListChecks,
 } from 'lucide-react'
 
 interface StaffMember { id: string; name: string; email: string; job_title: string | null; is_clinical: boolean; roles: string[] }
-interface SuggestedAction { description: string; assign: string; reason: string; deadline: string }
+interface SuggestedAction { description: string; assign: string; reason: string; source: string; deadline: string }
 
 const STATUS_FLOW = ['draft', 'submitted', 'under_investigation', 'discussed', 'actions_assigned', 'closed']
 const STATUS_LABELS: Record<string, string> = {
@@ -24,10 +25,17 @@ const STATUS_COLORS: Record<string, string> = {
 
 function parseSuggestedActions(text: string): SuggestedAction[] {
   const actions: SuggestedAction[] = []
-  const regex = /SUGGESTED_ACTION:\s*(.+?)\s*\|\s*ASSIGN:\s*(.+?)\s*\|\s*REASON:\s*(.+?)\s*\|\s*DEADLINE:\s*(\d+)/g
+  // Match with optional SOURCE field for backwards compatibility
+  const regex = /SUGGESTED_ACTION:\s*(.+?)\s*\|\s*ASSIGN:\s*(.+?)\s*\|\s*REASON:\s*(.+?)\s*\|\s*(?:SOURCE:\s*(.+?)\s*\|\s*)?DEADLINE:\s*(\d+)/g
   let match
   while ((match = regex.exec(text)) !== null) {
-    actions.push({ description: match[1].trim(), assign: match[2].trim(), reason: match[3].trim(), deadline: match[4].trim() })
+    actions.push({
+      description: match[1].trim(),
+      assign: match[2].trim(),
+      reason: match[3].trim(),
+      source: match[4]?.trim() || '',
+      deadline: match[5].trim(),
+    })
   }
   return actions
 }
@@ -46,10 +54,22 @@ export function EventDetailPage() {
   const [learning, setLearning] = useState('')
   const [linkedPolicies, setLinkedPolicies] = useState<string[] | null>(null)
   const [linkedRisks, setLinkedRisks] = useState<string[] | null>(null)
+
+  // AI Triage state (links only)
   const [triageResult, setTriageResult] = useState<string | null>(null)
   const [triageError, setTriageError] = useState<string | null>(null)
   const [triaging, setTriaging] = useState(false)
+
+  // AI Investigation state
+  const [investigationSuggestion, setInvestigationSuggestion] = useState<string | null>(null)
+  const [investigationError, setInvestigationError] = useState<string | null>(null)
+  const [suggestingInvestigation, setSuggestingInvestigation] = useState(false)
+
+  // AI Actions state
   const [suggestedActions, setSuggestedActions] = useState<SuggestedAction[]>([])
+  const [actionsResult, setActionsResult] = useState<string | null>(null)
+  const [actionsError, setActionsError] = useState<string | null>(null)
+  const [suggestingActions, setSuggestingActions] = useState(false)
 
   const { data: event, isLoading } = useQuery({
     queryKey: ['event', eventId],
@@ -117,18 +137,48 @@ export function EventDetailPage() {
     onSuccess: invalidate,
   })
 
+  // AI Triage — links policies and risks only
   const handleTriage = async () => {
-    setTriaging(true); setTriageError(null); setTriageResult(null); setSuggestedActions([])
+    setTriaging(true); setTriageError(null); setTriageResult(null)
     try {
       const res = await api<any>(`/events/${eventId}/triage`, { method: 'POST' })
-      const summary = res.summary || ''
-      setTriageResult(summary)
-      setSuggestedActions(parseSuggestedActions(summary))
+      setTriageResult(res.summary || 'Triage complete — policies and risks linked.')
       invalidate()
     } catch (err: any) {
       setTriageError(err.message || 'Agent unavailable')
     } finally {
       setTriaging(false)
+    }
+  }
+
+  // AI Suggest Investigation
+  const handleSuggestInvestigation = async () => {
+    setSuggestingInvestigation(true); setInvestigationError(null); setInvestigationSuggestion(null)
+    try {
+      const res = await api<any>(`/events/${eventId}/suggest-investigation`, { method: 'POST' })
+      const summary = res.summary || ''
+      // Strip the cost line from the suggestion
+      const cleaned = summary.replace(/\[Cost:.*?\]/g, '').trim()
+      setInvestigationSuggestion(cleaned)
+    } catch (err: any) {
+      setInvestigationError(err.message || 'Agent unavailable')
+    } finally {
+      setSuggestingInvestigation(false)
+    }
+  }
+
+  // AI Suggest Actions
+  const handleSuggestActions = async () => {
+    setSuggestingActions(true); setActionsError(null); setActionsResult(null); setSuggestedActions([])
+    try {
+      const res = await api<any>(`/events/${eventId}/suggest-actions`, { method: 'POST' })
+      const summary = res.summary || ''
+      setActionsResult(summary)
+      setSuggestedActions(parseSuggestedActions(summary))
+    } catch (err: any) {
+      setActionsError(err.message || 'Agent unavailable')
+    } finally {
+      setSuggestingActions(false)
     }
   }
 
@@ -186,7 +236,7 @@ export function EventDetailPage() {
         </div>
       </div>
 
-      {/* AI Triage banner — prominent when status is submitted */}
+      {/* AI Triage banner — links policies and risks only */}
       {event.status === 'submitted' && (
         <div className="bg-purple-50 border-2 border-purple-300 rounded-lg p-5 mb-6">
           <div className="flex items-center justify-between">
@@ -195,7 +245,7 @@ export function EventDetailPage() {
                 <Sparkles className="w-5 h-5" /> Ready for AI Triage
               </h2>
               <p className="text-sm text-purple-700 mt-1">
-                The event has been submitted. Click to let the AI analyse it, link relevant policies, suggest investigation areas, and propose actions with staff assignments.
+                The event has been submitted. Click to let the AI identify and link relevant policies and risks.
               </p>
               {(event.involved_staff || []).length > 0 && (
                 <p className="text-xs text-purple-600 mt-2">
@@ -210,6 +260,12 @@ export function EventDetailPage() {
             </button>
           </div>
           {triageError && <p className="text-sm text-red-600 mt-3">{triageError}</p>}
+          {triageResult && (
+            <div className="bg-white border border-purple-200 rounded-lg p-3 mt-3 text-sm">
+              <p className="text-xs font-medium text-purple-700 mb-1">Triage Result:</p>
+              <p className="text-gray-700 whitespace-pre-wrap text-xs">{triageResult.replace(/\[Cost:.*?\]/g, '').trim()}</p>
+            </div>
+          )}
         </div>
       )}
 
@@ -248,15 +304,51 @@ export function EventDetailPage() {
 
           {/* Investigation */}
           <div className={`bg-white rounded-lg shadow-sm border p-5 ${isClosed ? 'opacity-75' : ''}`}>
-            <h2 className="flex items-center gap-2 font-semibold text-gray-900 mb-3">
-              <UserPlus className="w-4 h-4" /> Investigation
-            </h2>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="flex items-center gap-2 font-semibold text-gray-900">
+                <UserPlus className="w-4 h-4" /> Investigation
+              </h2>
+              {!isClosed && (
+                <button onClick={handleSuggestInvestigation} disabled={suggestingInvestigation}
+                  className="flex items-center gap-1 text-xs bg-purple-50 text-purple-700 px-3 py-1.5 rounded-lg hover:bg-purple-100 disabled:opacity-50">
+                  {suggestingInvestigation ? <Loader2 className="w-3 h-3 animate-spin" /> : <Search className="w-3 h-3" />}
+                  AI Suggest Investigation
+                </button>
+              )}
+            </div>
             {event.investigation_notes && (
               <div className="bg-gray-50 rounded p-3 mb-3 text-sm">
                 <p className="text-xs text-gray-500 mb-1">Notes recorded:</p>
                 <p className="whitespace-pre-wrap">{event.investigation_notes}</p>
               </div>
             )}
+
+            {investigationError && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-3 text-sm">
+                <p className="text-red-600">{investigationError}</p>
+              </div>
+            )}
+
+            {/* AI investigation suggestion */}
+            {investigationSuggestion && (
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm font-medium text-purple-800">AI Suggested Investigation</p>
+                  <div className="flex gap-2">
+                    <button onClick={() => { setIxNotes(investigationSuggestion); setInvestigationSuggestion(null) }}
+                      className="text-xs bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
+                      Use as Notes
+                    </button>
+                    <button onClick={() => setInvestigationSuggestion(null)}
+                      className="text-xs bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300">
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-700 whitespace-pre-wrap">{investigationSuggestion}</p>
+              </div>
+            )}
+
             {!isClosed && (
               <div className="space-y-2">
                 <textarea className="w-full rounded-lg border px-3 py-2 text-sm" rows={3}
@@ -311,17 +403,17 @@ export function EventDetailPage() {
                 )}
               </h2>
               {!isClosed && (
-                <button onClick={handleTriage} disabled={triaging}
+                <button onClick={handleSuggestActions} disabled={suggestingActions}
                   className="flex items-center gap-1 text-xs bg-purple-50 text-purple-700 px-3 py-1.5 rounded-lg hover:bg-purple-100 disabled:opacity-50">
-                  {triaging ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+                  {suggestingActions ? <Loader2 className="w-3 h-3 animate-spin" /> : <ListChecks className="w-3 h-3" />}
                   AI Suggest Actions
                 </button>
               )}
             </div>
 
-            {triageError && (
+            {actionsError && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-3 text-sm">
-                <p className="text-red-600">{triageError}</p>
+                <p className="text-red-600">{actionsError}</p>
               </div>
             )}
 
@@ -347,7 +439,21 @@ export function EventDetailPage() {
                     <p className="text-xs text-purple-600 mt-1">
                       Assign: <strong>{sa.assign}</strong> — {sa.reason}
                     </p>
-                    <p className="text-xs text-gray-500">Deadline: {sa.deadline} days from now</p>
+                    {sa.source && (
+                      <p className="text-xs mt-1">
+                        <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded ${
+                          sa.source.startsWith('POLICY:') ? 'bg-blue-50 text-blue-700'
+                          : sa.source.startsWith('NICE:') ? 'bg-green-50 text-green-700'
+                          : sa.source.startsWith('NHS England:') ? 'bg-indigo-50 text-indigo-700'
+                          : sa.source.startsWith('MHRA:') ? 'bg-red-50 text-red-700'
+                          : sa.source.startsWith('CQC:') ? 'bg-amber-50 text-amber-700'
+                          : 'bg-gray-50 text-gray-600'
+                        }`}>
+                          {sa.source}
+                        </span>
+                      </p>
+                    )}
+                    <p className="text-xs text-gray-500 mt-1">Deadline: {sa.deadline} days from now</p>
                     <div className="flex gap-2 mt-2">
                       <button onClick={() => addSuggestedAction(sa)}
                         className="flex items-center gap-1 text-xs bg-green-600 text-white px-3 py-1.5 rounded hover:bg-green-700">
@@ -373,10 +479,10 @@ export function EventDetailPage() {
               </div>
             )}
 
-            {triageResult && !suggestedActions.length && (
+            {actionsResult && !suggestedActions.length && (
               <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 mb-3 text-sm">
-                <p className="text-xs font-medium text-purple-700 mb-1">AI Triage Result:</p>
-                <p className="text-gray-700 whitespace-pre-wrap text-xs">{triageResult.slice(0, 600)}</p>
+                <p className="text-xs font-medium text-purple-700 mb-1">AI Result:</p>
+                <p className="text-gray-700 whitespace-pre-wrap text-xs">{actionsResult.replace(/\[Cost:.*?\]/g, '').trim().slice(0, 600)}</p>
               </div>
             )}
 

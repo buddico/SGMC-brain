@@ -26,7 +26,11 @@ class EventTypeOut(BaseModel):
     is_active: bool
     json_schema: dict
     ui_schema: dict | None
+    category: str | None
+    display_order: int
     tags: list | None
+    examples: list | None
+    typical_actions: list | None
     cqc_category: str | None
 
     model_config = {"from_attributes": True}
@@ -37,12 +41,14 @@ def list_event_types(
     db: Session = Depends(get_session),
     actor: Actor = Depends(get_current_actor),
 ):
-    types = db.scalars(select(EventType).where(EventType.is_active).order_by(EventType.name)).all()
+    types = db.scalars(select(EventType).where(EventType.is_active).order_by(EventType.display_order, EventType.name)).all()
     return [
         EventTypeOut(
             id=str(t.id), name=t.name, slug=t.slug, description=t.description,
             version=t.version, is_active=t.is_active, json_schema=t.json_schema,
-            ui_schema=t.ui_schema, tags=t.tags, cqc_category=t.cqc_category,
+            ui_schema=t.ui_schema, category=t.category, display_order=t.display_order or 0,
+            tags=t.tags, examples=t.examples, typical_actions=t.typical_actions,
+            cqc_category=t.cqc_category,
         )
         for t in types
     ]
@@ -520,15 +526,10 @@ def update_event_links(
     return {"status": "updated"}
 
 
-# --- AI Triage (proxy to agent runtime) ---
+# --- AI Agent proxies ---
 
-@router.post("/{event_id}/triage")
-async def triage_event(
-    event_id: uuid.UUID,
-    db: Session = Depends(get_session),
-    actor: Actor = Depends(get_current_actor),
-):
-    """Proxy to agent runtime for AI-powered event triage."""
+async def _proxy_agent(event_id: uuid.UUID, agent_path: str, db: Session):
+    """Proxy a request to the agent runtime, validating the event exists first."""
     import httpx
     from app.core.config import settings
 
@@ -539,7 +540,7 @@ async def triage_event(
     try:
         async with httpx.AsyncClient(timeout=120) as client:
             resp = await client.post(
-                f"{settings.AGENT_RUNTIME_URL}/run/event-triage",
+                f"{settings.AGENT_RUNTIME_URL}/run/{agent_path}",
                 json={"event_id": str(event_id)},
             )
             resp.raise_for_status()
@@ -549,7 +550,37 @@ async def triage_event(
     except httpx.HTTPStatusError as e:
         raise HTTPException(status_code=502, detail=f"Agent error: {e.response.text[:200]}")
     except httpx.ReadTimeout:
-        raise HTTPException(status_code=504, detail="Agent triage timed out (>120s). Try again or link manually.")
+        raise HTTPException(status_code=504, detail="Agent timed out (>120s). Try again.")
+
+
+@router.post("/{event_id}/triage")
+async def triage_event(
+    event_id: uuid.UUID,
+    db: Session = Depends(get_session),
+    actor: Actor = Depends(get_current_actor),
+):
+    """AI triage — link relevant policies and risks to the event."""
+    return await _proxy_agent(event_id, "event-triage", db)
+
+
+@router.post("/{event_id}/suggest-investigation")
+async def suggest_investigation(
+    event_id: uuid.UUID,
+    db: Session = Depends(get_session),
+    actor: Actor = Depends(get_current_actor),
+):
+    """AI-suggested investigation notes based on linked policies/risks and best practice."""
+    return await _proxy_agent(event_id, "suggest-investigation", db)
+
+
+@router.post("/{event_id}/suggest-actions")
+async def suggest_actions(
+    event_id: uuid.UUID,
+    db: Session = Depends(get_session),
+    actor: Actor = Depends(get_current_actor),
+):
+    """AI-suggested actions with staff assignments based on linked policies/risks and best practice."""
+    return await _proxy_agent(event_id, "suggest-actions", db)
 
 
 # --- Status (legacy, keep for backward compat) ---

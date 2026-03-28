@@ -12,6 +12,9 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 from agents.event_triage import run as run_triage
+from agents.suggest_investigation import run as run_suggest_investigation
+from agents.suggest_actions import run as run_suggest_actions
+from agents.suggest_alert_actions import run as run_suggest_alert_actions
 from agents.evidence_narrator import run as run_narrator
 from agents.mhra_ingestion import run as run_mhra
 from config import config
@@ -57,16 +60,44 @@ async def trigger_mhra():
     return {"status": "completed", "summary": summary}
 
 
-class TriageRequest(BaseModel):
+class EventRequest(BaseModel):
     event_id: str
 
 
 @app.post("/run/event-triage")
-async def trigger_triage(body: TriageRequest):
-    """Triage a specific event — suggest policy and risk links."""
+async def trigger_triage(body: EventRequest):
+    """Triage a specific event — link relevant policies and risks."""
     logger.info(f"Event triage triggered for {body.event_id}")
     summary = await run_triage(body.event_id)
     return {"status": "completed", "event_id": body.event_id, "summary": summary}
+
+
+@app.post("/run/suggest-investigation")
+async def trigger_suggest_investigation(body: EventRequest):
+    """Suggest investigation notes for an event."""
+    logger.info(f"Investigation suggestion triggered for {body.event_id}")
+    summary = await run_suggest_investigation(body.event_id)
+    return {"status": "completed", "event_id": body.event_id, "summary": summary}
+
+
+@app.post("/run/suggest-actions")
+async def trigger_suggest_actions(body: EventRequest):
+    """Suggest actions with staff assignments for an event."""
+    logger.info(f"Action suggestion triggered for {body.event_id}")
+    summary = await run_suggest_actions(body.event_id)
+    return {"status": "completed", "event_id": body.event_id, "summary": summary}
+
+
+class AlertRequest(BaseModel):
+    alert_id: str
+
+
+@app.post("/run/suggest-alert-actions")
+async def trigger_suggest_alert_actions(body: AlertRequest):
+    """Suggest actions for a safety alert."""
+    logger.info(f"Alert action suggestion triggered for {body.alert_id}")
+    summary = await run_suggest_alert_actions(body.alert_id)
+    return {"status": "completed", "alert_id": body.alert_id, "summary": summary}
 
 
 class NarratorRequest(BaseModel):

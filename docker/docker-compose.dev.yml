@@ -36,6 +36,7 @@ services:
       - ../backend/app:/app/app:ro
       - ../backend/alembic:/app/alembic:ro
       - ../backend/scripts:/app/scripts:ro
+      - ../seed-data:/app/seed-data:ro
       - uploads:/data/uploads
       - policies:/data/policies
     environment:
@@ -45,13 +46,14 @@ services:
       DEV_AUTH_EMAIL: dev@stroudgreenmedical.co.uk
       DEV_AUTH_NAME: Dev User
       STAFF_API_URL: http://host.docker.internal:8080/api
+      AGENT_RUNTIME_URL: http://host.docker.internal:8091
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8090/api/health"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8090/api/health')"]
       interval: 10s
       timeout: 5s
       retries: 3

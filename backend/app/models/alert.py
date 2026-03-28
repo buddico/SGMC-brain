@@ -4,7 +4,7 @@ import enum
 import uuid
 from datetime import date, datetime
 
-from sqlalchemy import Date, DateTime, Enum, ForeignKey, Integer, String, Text
+from sqlalchemy import Boolean, Date, DateTime, Enum, ForeignKey, Integer, String, Text
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
@@ -57,11 +57,21 @@ class Alert(Base):
     first_seen_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     last_checked_at: Mapped[datetime | None] = mapped_column(DateTime)
 
+    # Pharmacist notes (free text summary for composite alerts / FSNs)
+    pharmacist_notes: Mapped[str | None] = mapped_column(Text)
+
+    # Pharmacist triage
+    is_relevant: Mapped[bool | None] = mapped_column(Boolean, nullable=True)  # null = untriaged
+    triaged_by_email: Mapped[str | None] = mapped_column(String(255))
+    triaged_by_name: Mapped[str | None] = mapped_column(String(255))
+    triaged_at: Mapped[datetime | None] = mapped_column(DateTime)
+
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now())
 
     actions: Mapped[list["AlertAction"]] = relationship(back_populates="alert", cascade="all, delete-orphan")
     notifications: Mapped[list["AlertNotification"]] = relationship(back_populates="alert", cascade="all, delete-orphan")
+    acknowledgments: Mapped[list["AlertAcknowledgment"]] = relationship(back_populates="alert", cascade="all, delete-orphan")
 
 
 class AlertAction(Base):
@@ -70,11 +80,17 @@ class AlertAction(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     alert_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("alerts.id"))
     action_type: Mapped[str] = mapped_column(String(100))  # reviewed, actioned, patient_search, etc.
-    notes: Mapped[str | None] = mapped_column(Text)
+    description: Mapped[str | None] = mapped_column(Text)  # what needs to be done
+    notes: Mapped[str | None] = mapped_column(Text)  # additional notes
     evidence_files: Mapped[list | None] = mapped_column(JSONB, default=list)
+    assigned_to_name: Mapped[str | None] = mapped_column(String(255))
+    assigned_to_email: Mapped[str | None] = mapped_column(String(255))
+    deadline: Mapped[date | None] = mapped_column(Date)
     performed_by_email: Mapped[str] = mapped_column(String(255))
     performed_by_name: Mapped[str] = mapped_column(String(255))
     performed_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime)
+    completed_by: Mapped[str | None] = mapped_column(String(255))
     patients_identified: Mapped[int | None] = mapped_column(Integer)
     applies_to_practice: Mapped[bool | None] = mapped_column()
 
@@ -95,3 +111,18 @@ class AlertNotification(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
 
     alert: Mapped[Alert] = relationship(back_populates="notifications")
+
+
+class AlertAcknowledgment(Base):
+    """Read receipts for alert notifications — proves clinicians were informed (CQC evidence)."""
+    __tablename__ = "alert_acknowledgments"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    alert_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("alerts.id"))
+    user_email: Mapped[str] = mapped_column(String(255))
+    user_name: Mapped[str] = mapped_column(String(255))
+    requested_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    acknowledged_at: Mapped[datetime | None] = mapped_column(DateTime)  # null = pending
+    method: Mapped[str | None] = mapped_column(String(50))  # in_app, clinical_meeting
+
+    alert: Mapped[Alert] = relationship(back_populates="acknowledgments")

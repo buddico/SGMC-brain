@@ -31,7 +31,11 @@ export interface EventType {
   is_active: boolean
   json_schema: Record<string, unknown>
   ui_schema: Record<string, unknown> | null
+  category: string | null
+  display_order: number
   tags: string[] | null
+  examples: string[] | null
+  typical_actions: string[] | null
   cqc_category: string | null
 }
 
@@ -126,6 +130,7 @@ export interface AlertItem {
   status: string
   priority: string | null
   due_date: string | null
+  is_relevant: boolean | null
   actions_count: number
   created_at: string
 }

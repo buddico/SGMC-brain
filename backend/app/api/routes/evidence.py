@@ -315,11 +315,30 @@ def generate_evidence_pack(
         ))
         for a in alerts:
             sort_order += 1
+            ack_data = [
+                {"name": ack.user_name, "acknowledged_at": ack.acknowledged_at.isoformat() if ack.acknowledged_at else None}
+                for ack in a.acknowledgments
+            ]
             items.append(EvidenceItem(
                 pack_id=pack.id, item_type="alert", item_id=str(a.id),
                 title=a.title,
-                summary=f"Source: {a.source.value} | Status: {a.status.value} | Actions recorded: {len(a.actions)}",
-                evidence_data={"source": a.source.value, "status": a.status.value, "actions": len(a.actions)},
+                summary=(
+                    f"Source: {a.source.value} | Status: {a.status.value} | "
+                    f"Relevant: {'Yes' if a.is_relevant else 'No' if a.is_relevant is False else 'Untriaged'} | "
+                    f"Triaged by: {a.triaged_by_name or 'N/A'} | "
+                    f"Actions: {len(a.actions)} | "
+                    f"Read receipts: {sum(1 for ack in a.acknowledgments if ack.acknowledged_at)}/{len(a.acknowledgments)}"
+                ),
+                evidence_data={
+                    "source": a.source.value,
+                    "status": a.status.value,
+                    "is_relevant": a.is_relevant,
+                    "triaged_by": a.triaged_by_name,
+                    "triaged_at": a.triaged_at.isoformat() if a.triaged_at else None,
+                    "actions": len(a.actions),
+                    "acknowledgments": ack_data,
+                    "acknowledgment_rate": f"{sum(1 for ack in a.acknowledgments if ack.acknowledged_at)}/{len(a.acknowledgments)}",
+                },
                 sort_order=sort_order,
             ))
 

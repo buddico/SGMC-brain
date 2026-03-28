@@ -10,6 +10,7 @@ import { RisksPage } from '@/pages/risks/RisksPage'
 import { RiskDetailPage } from '@/pages/risks/RiskDetailPage'
 import { CompliancePage } from '@/pages/compliance/CompliancePage'
 import { AlertsPage } from '@/pages/alerts/AlertsPage'
+import { AlertDetailPage } from '@/pages/alerts/AlertDetailPage'
 import { EvidencePage } from '@/pages/evidence/EvidencePage'
 import { EvidencePackPage } from '@/pages/evidence/EvidencePackPage'
 
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/risks/:riskId" element={<RiskDetailPage />} />
         <Route path="/compliance" element={<CompliancePage />} />
         <Route path="/alerts" element={<AlertsPage />} />
+        <Route path="/alerts/:alertId" element={<AlertDetailPage />} />
         <Route path="/evidence" element={<EvidencePage />} />
         <Route path="/evidence/:packId" element={<EvidencePackPage />} />
       </Routes>

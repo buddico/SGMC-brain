@@ -33,6 +33,12 @@ async def _api_put(path: str, data: dict) -> dict:
 
 # --- Alert tools ---
 
+@tool("get_alert", "Get full details of a safety alert including actions.", {"alert_id": str})
+async def get_alert(args: dict) -> dict:
+    alert = await _api_get(f"/alerts/{args['alert_id']}")
+    return {"content": [{"type": "text", "text": json.dumps(alert, indent=2)}]}
+
+
 @tool("list_alerts", "List existing alerts in the system. Use to check for duplicates before creating.", {"limit": int})
 async def list_alerts(args: dict) -> dict:
     limit = args.get("limit", 100)

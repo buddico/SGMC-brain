@@ -19,6 +19,7 @@ class AgentConfig(BaseSettings):
     # Cost guardrails
     MAX_BUDGET_INGESTION: float = 0.20  # $0.20 per ingestion run
     MAX_BUDGET_TRIAGE: float = 0.10  # $0.10 per event triage
+    MAX_BUDGET_ALERT_ACTIONS: float = 0.10  # $0.10 per alert action suggestion
     MAX_BUDGET_NARRATOR: float = 0.50  # $0.50 per narrative generation
 
     model_config = {"env_prefix": "AGENT_", "env_file": ".env", "extra": "ignore"}

@@ -4,7 +4,7 @@ import enum
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Integer, String, Text
+from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Integer, SmallInteger, String, Text
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
@@ -44,9 +44,13 @@ class EventType(Base):
     ui_schema: Mapped[dict | None] = mapped_column(JSONB)
 
     # Categorization
+    category: Mapped[str | None] = mapped_column(String(100))  # e.g. "Patient Safety Events"
+    display_order: Mapped[int] = mapped_column(SmallInteger, default=0)
     tags: Mapped[list | None] = mapped_column(JSONB, default=list)
     linked_policy_ids: Mapped[list | None] = mapped_column(JSONB, default=list)  # UUIDs of related policies
     applicable_roles: Mapped[list | None] = mapped_column(JSONB, default=list)
+    examples: Mapped[list | None] = mapped_column(JSONB, default=list)  # example incidents
+    typical_actions: Mapped[list | None] = mapped_column(JSONB, default=list)  # default response actions
 
     # CQC
     cqc_category: Mapped[str | None] = mapped_column(String(50))  # safe, effective, etc.

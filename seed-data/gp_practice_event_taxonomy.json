@@ -1,0 +1,1195 @@
+{
+  "source_markdown": "GP-Practice-Event-Categories.md",
+  "generated_at": "2026-02-04",
+  "categories": [
+    {
+      "id": "patient-safety-events",
+      "name": "Patient Safety Events",
+      "cqc_domain": "Safe",
+      "event_types": [
+        {
+          "id": "significant-events-seas",
+          "name": "Significant Events (SEAs)",
+          "examples_raw": "Missed diagnosis, delayed referral, unexpected death",
+          "typical_actions_raw": "Full SEA analysis, team discussion, action plan",
+          "examples": ["Missed diagnosis", "delayed referral", "unexpected death"],
+          "typical_actions": ["Full SEA analysis", "team discussion", "action plan"]
+        },
+        {
+          "id": "near-misses",
+          "name": "Near Misses",
+          "examples_raw": "Error caught before reaching patient",
+          "typical_actions_raw": "Document, assess system factors, implement prevention",
+          "examples": ["Error caught before reaching patient"],
+          "typical_actions": ["Document", "assess system factors", "implement prevention"]
+        },
+        {
+          "id": "medication-errors",
+          "name": "Medication Errors",
+          "examples_raw": "Wrong drug/dose dispensed, interaction missed",
+          "typical_actions_raw": "Patient notification, pharmacy liaison, system review",
+          "examples": ["Wrong drug/dose dispensed", "interaction missed"],
+          "typical_actions": ["Patient notification", "pharmacy liaison", "system review"]
+        },
+        {
+          "id": "test-results-not-actioned",
+          "name": "Test Results Not Actioned",
+          "examples_raw": "Abnormal result not followed up",
+          "typical_actions_raw": "Contact patient, clinical review, workflow audit",
+          "examples": ["Abnormal result not followed up"],
+          "typical_actions": ["Contact patient", "clinical review", "workflow audit"]
+        },
+        {
+          "id": "referral-delays",
+          "name": "Referral Delays",
+          "examples_raw": "Urgent referral not sent/received",
+          "typical_actions_raw": "Chase referral, document timeline, escalate",
+          "examples": ["Urgent referral not sent/received"],
+          "typical_actions": ["Chase referral", "document timeline", "escalate"]
+        },
+        {
+          "id": "patient-identification-error",
+          "name": "Patient Identification Error",
+          "examples_raw": "Wrong patient notes, misidentification at check-in, prescription for wrong patient",
+          "typical_actions_raw": "Immediate correction, root cause analysis, ID verification review",
+          "examples": ["Wrong patient notes", "misidentification at check-in", "prescription for wrong patient"],
+          "typical_actions": ["Immediate correction", "root cause analysis", "ID verification review"]
+        },
+        {
+          "id": "clinical-communication-failures",
+          "name": "Clinical Communication Failures",
+          "examples_raw": "Hospital discharge not received, results lost, handover gap between sessions",
+          "typical_actions_raw": "Source documents, update records, process review",
+          "examples": ["Hospital discharge not received", "results lost", "handover gap between sessions"],
+          "typical_actions": ["Source documents", "update records", "process review"]
+        },
+        {
+          "id": "clinical-handover-failure",
+          "name": "Clinical Handover Failure",
+          "examples_raw": "Shift/session handover gap, urgent task not passed on, on-call handover missed",
+          "typical_actions_raw": "Review handover process, implement structured handover tool, staff briefing",
+          "examples": ["Shift/session handover gap", "urgent task not passed on", "on-call handover missed"],
+          "typical_actions": ["Review handover process", "implement structured handover tool", "staff briefing"]
+        },
+        {
+          "id": "prescription-errors",
+          "name": "Prescription Errors",
+          "examples_raw": "Allergy not checked, contraindication missed",
+          "typical_actions_raw": "Patient contact, pharmacy alert, system safeguards",
+          "examples": ["Allergy not checked", "contraindication missed"],
+          "typical_actions": ["Patient contact", "pharmacy alert", "system safeguards"]
+        },
+        {
+          "id": "consent-issue",
+          "name": "Consent Issue",
+          "examples_raw": "Consent not obtained, wrong consent, patient not informed of risks",
+          "typical_actions_raw": "Patient contact, documentation review, consent process audit",
+          "examples": ["Consent not obtained", "wrong consent", "patient not informed of risks"],
+          "typical_actions": ["Patient contact", "documentation review", "consent process audit"]
+        }
+      ]
+    },
+    {
+      "id": "security-violence",
+      "name": "Security & Violence",
+      "cqc_domain": "Safe",
+      "event_types": [
+        {
+          "id": "physical-violence",
+          "name": "Physical Violence",
+          "examples_raw": "Patient assaults staff",
+          "typical_actions_raw": "Police report, staff support, risk assessment",
+          "examples": ["Patient assaults staff"],
+          "typical_actions": ["Police report", "staff support", "risk assessment"]
+        },
+        {
+          "id": "verbal-abuse-threats",
+          "name": "Verbal Abuse/Threats",
+          "examples_raw": "Aggressive behaviour, intimidation",
+          "typical_actions_raw": "Incident form, warning letter, consider removal",
+          "examples": ["Aggressive behaviour", "intimidation"],
+          "typical_actions": ["Incident form", "warning letter", "consider removal"]
+        },
+        {
+          "id": "threatening-behaviour",
+          "name": "Threatening Behaviour",
+          "examples_raw": "Weapons, stalking, harassment",
+          "typical_actions_raw": "Police, staff safety measures, premises security",
+          "examples": ["Weapons", "stalking", "harassment"],
+          "typical_actions": ["Police", "staff safety measures", "premises security"]
+        },
+        {
+          "id": "intruder-trespass",
+          "name": "Intruder/Trespass",
+          "examples_raw": "Unauthorized access to clinical areas",
+          "typical_actions_raw": "Security review, CCTV check, police if needed",
+          "examples": ["Unauthorized access to clinical areas"],
+          "typical_actions": ["Security review", "CCTV check", "police if needed"]
+        },
+        {
+          "id": "theft",
+          "name": "Theft",
+          "examples_raw": "Drugs, equipment, patient belongings",
+          "typical_actions_raw": "Police report, stock check, security review",
+          "examples": ["Drugs", "equipment", "patient belongings"],
+          "typical_actions": ["Police report", "stock check", "security review"]
+        },
+        {
+          "id": "property-damage",
+          "name": "Property Damage",
+          "examples_raw": "Vandalism, deliberate damage",
+          "typical_actions_raw": "Repair, insurance claim, perpetrator action",
+          "examples": ["Vandalism", "deliberate damage"],
+          "typical_actions": ["Repair", "insurance claim", "perpetrator action"]
+        },
+        {
+          "id": "lone-working-incident",
+          "name": "Lone Working Incident",
+          "examples_raw": "Staff working alone faces risk, no buddy system in place, out-of-hours lone worker concern",
+          "typical_actions_raw": "Risk assessment review, lone working policy update, staff support",
+          "examples": ["Staff working alone faces risk", "no buddy system in place", "out-of-hours lone worker concern"],
+          "typical_actions": ["Risk assessment review", "lone working policy update", "staff support"]
+        },
+        {
+          "id": "patient-removal-from-list",
+          "name": "Patient Removal from List",
+          "examples_raw": "Formal removal following violent/threatening behaviour",
+          "typical_actions_raw": "Document behaviour history, notify patient, arrange alternative registration, NHS England notification",
+          "examples": ["Formal removal following violent/threatening behaviour"],
+          "typical_actions": ["Document behaviour history", "notify patient", "arrange alternative registration", "NHS England notification"]
+        },
+        {
+          "id": "sexual-misconduct",
+          "name": "Sexual Misconduct",
+          "examples_raw": "Sexual harassment of staff or patient, unwanted sexual contact, indecent exposure, sexual comments, abuse of clinical relationship, voyeurism",
+          "typical_actions_raw": "Ensure immediate safety, support complainant, investigate per Sexual Safety Policy, consider police referral, regulatory body notification, FTSU route",
+          "examples": ["Sexual harassment of staff or patient", "unwanted sexual contact", "indecent exposure", "sexual comments", "abuse of clinical relationship", "voyeurism"],
+          "typical_actions": ["Ensure immediate safety", "support complainant", "investigate per Sexual Safety Policy", "consider police referral", "regulatory body notification", "FTSU route"]
+        }
+      ]
+    },
+    {
+      "id": "governance-complaints-feedback",
+      "name": "Governance, Complaints & Feedback",
+      "cqc_domain": "Responsive, Well-led",
+      "event_types": [
+        {
+          "id": "safety-concern-feedback",
+          "name": "Safety Concern Feedback",
+          "examples_raw": "Patient reports feeling unsafe, medication concern raised, hygiene complaint",
+          "typical_actions_raw": "Investigate safety issue, patient contact, clinical review, log as CQC Safe domain",
+          "examples": ["Patient reports feeling unsafe", "medication concern raised", "hygiene complaint"],
+          "typical_actions": ["Investigate safety issue", "patient contact", "clinical review", "log as CQC Safe domain"]
+        },
+        {
+          "id": "effectiveness-concern-feedback",
+          "name": "Effectiveness Concern Feedback",
+          "examples_raw": "Diagnosis query, treatment outcome concern, referral not working, doctor didn't examine me",
+          "typical_actions_raw": "Clinical review, patient contact, outcome assessment, log as CQC Effective domain",
+          "examples": ["Diagnosis query", "treatment outcome concern", "referral not working", "doctor didn't examine me"],
+          "typical_actions": ["Clinical review", "patient contact", "outcome assessment", "log as CQC Effective domain"]
+        },
+        {
+          "id": "caring-concern-feedback",
+          "name": "Caring Concern Feedback",
+          "examples_raw": "Felt rushed, not listened to, dignity issue, rude interaction, lack of compassion",
+          "typical_actions_raw": "Staff discussion, patient follow-up, reflection, log as CQC Caring domain",
+          "examples": ["Felt rushed", "not listened to", "dignity issue", "rude interaction", "lack of compassion"],
+          "typical_actions": ["Staff discussion", "patient follow-up", "reflection", "log as CQC Caring domain"]
+        },
+        {
+          "id": "responsiveness-concern-feedback",
+          "name": "Responsiveness Concern Feedback",
+          "examples_raw": "Can't get appointment, long wait, phone not answered, online booking issues",
+          "typical_actions_raw": "Access review, capacity assessment, process improvement, log as CQC Responsive domain",
+          "examples": ["Can't get appointment", "long wait", "phone not answered", "online booking issues"],
+          "typical_actions": ["Access review", "capacity assessment", "process improvement", "log as CQC Responsive domain"]
+        },
+        {
+          "id": "leadership-service-concern-feedback",
+          "name": "Leadership/Service Concern Feedback",
+          "examples_raw": "Reception process complaint, communication breakdown, practice isn't organised",
+          "typical_actions_raw": "Management review, process audit, staff training, log as CQC Well-led domain",
+          "examples": ["Reception process complaint", "communication breakdown", "practice isn't organised"],
+          "typical_actions": ["Management review", "process audit", "staff training", "log as CQC Well-led domain"]
+        },
+        {
+          "id": "formal-complaints",
+          "name": "Formal Complaint (NHS Process)",
+          "examples_raw": "Written complaint via NHS process",
+          "typical_actions_raw": "Acknowledge within 3 days, investigate, respond within deadline",
+          "examples": ["Written complaint via NHS process"],
+          "typical_actions": ["Acknowledge within 3 days", "investigate", "respond within deadline"]
+        },
+        {
+          "id": "compliments-positive-feedback",
+          "name": "Compliment / Positive Feedback",
+          "examples_raw": "Positive FFT response, thank you card, online review praise",
+          "typical_actions_raw": "Log, share with team, include in governance reports",
+          "examples": ["Positive FFT response", "thank you card", "online review praise"],
+          "typical_actions": ["Log", "share with team", "include in governance reports"]
+        },
+        {
+          "id": "online-review-concern",
+          "name": "Online Review Concern",
+          "examples_raw": "Negative NHS Choices review, Google review flagging issue",
+          "typical_actions_raw": "Assess content, respond publicly if appropriate, internal investigation, learning",
+          "examples": ["Negative NHS Choices review", "Google review flagging issue"],
+          "typical_actions": ["Assess content", "respond publicly if appropriate", "internal investigation", "learning"]
+        },
+        {
+          "id": "learning-event-outcome",
+          "name": "Learning Event / SEA Meeting Outcome",
+          "examples_raw": "SEA discussion outcome, learning points agreed, quality improvement action",
+          "typical_actions_raw": "Document learning, assign actions, set review date, share with team",
+          "examples": ["SEA discussion outcome", "learning points agreed", "quality improvement action"],
+          "typical_actions": ["Document learning", "assign actions", "set review date", "share with team"]
+        },
+        {
+          "id": "claims-litigation",
+          "name": "Claims/Litigation",
+          "examples_raw": "Legal letter, solicitor contact",
+          "typical_actions_raw": "MDU/MPS notification, preserve records",
+          "examples": ["Legal letter", "solicitor contact"],
+          "typical_actions": ["MDU/MPS notification", "preserve records"]
+        },
+        {
+          "id": "coroner-inquests",
+          "name": "Coroner Inquests",
+          "examples_raw": "Request for records/statement",
+          "typical_actions_raw": "Legal review, statement preparation, attendance",
+          "examples": ["Request for records/statement"],
+          "typical_actions": ["Legal review", "statement preparation", "attendance"]
+        },
+        {
+          "id": "duty-of-candour",
+          "name": "Duty of Candour",
+          "examples_raw": "Moderate/severe harm incidents",
+          "typical_actions_raw": "Patient notification, apology, investigation",
+          "examples": ["Moderate/severe harm incidents"],
+          "typical_actions": ["Patient notification", "apology", "investigation"]
+        },
+        {
+          "id": "cqc-concerns",
+          "name": "CQC Concerns",
+          "examples_raw": "Inspector feedback, rating issues",
+          "typical_actions_raw": "Action plan, evidence gathering, improvement work",
+          "examples": ["Inspector feedback", "rating issues"],
+          "typical_actions": ["Action plan", "evidence gathering", "improvement work"]
+        },
+        {
+          "id": "ombudsman-cases",
+          "name": "Ombudsman Cases",
+          "examples_raw": "PHSO investigation",
+          "typical_actions_raw": "Full cooperation, learning implementation",
+          "examples": ["PHSO investigation"],
+          "typical_actions": ["Full cooperation", "learning implementation"]
+        }
+      ]
+    },
+    {
+      "id": "access-equality",
+      "name": "Access & Equality",
+      "cqc_domain": "Responsive, Caring",
+      "event_types": [
+        {
+          "id": "physical-accessibility-barrier",
+          "name": "Physical Accessibility Barrier",
+          "examples_raw": "Broken wheelchair ramp/bell, lift out of order, treatment room inaccessible, no step-free access",
+          "typical_actions_raw": "Immediate repair, temporary alternative, risk assessment, Equality Act review",
+          "examples": ["Broken wheelchair ramp/bell", "lift out of order", "treatment room inaccessible", "no step-free access"],
+          "typical_actions": ["Immediate repair", "temporary alternative", "risk assessment", "Equality Act review"]
+        },
+        {
+          "id": "reasonable-adjustment-failure",
+          "name": "Reasonable Adjustment Failure",
+          "examples_raw": "Adjustment not recorded/actioned, patient unable to access service due to disability, sensory needs not met",
+          "typical_actions_raw": "Patient contact, record update, staff training, process review",
+          "examples": ["Adjustment not recorded/actioned", "patient unable to access service due to disability", "sensory needs not met"],
+          "typical_actions": ["Patient contact", "record update", "staff training", "process review"]
+        },
+        {
+          "id": "communication-needs-not-met",
+          "name": "Communication Needs Not Met",
+          "examples_raw": "AIS not followed, no easy-read materials, hearing loop not working, BSL not arranged",
+          "typical_actions_raw": "AIS compliance check, adjust patient record flags, staff briefing, source materials",
+          "examples": ["AIS not followed", "no easy-read materials", "hearing loop not working", "BSL not arranged"],
+          "typical_actions": ["AIS compliance check", "adjust patient record flags", "staff briefing", "source materials"]
+        },
+        {
+          "id": "language-barrier",
+          "name": "Language Barrier",
+          "examples_raw": "Interpreter not booked despite known need, telephone interpretation failed, patient left without understanding",
+          "typical_actions_raw": "Rebook with interpreter, incident review, DALS service check, record language preference",
+          "examples": ["Interpreter not booked despite known need", "telephone interpretation failed", "patient left without understanding"],
+          "typical_actions": ["Rebook with interpreter", "incident review", "DALS service check", "record language preference"]
+        },
+        {
+          "id": "digital-exclusion",
+          "name": "Digital Exclusion",
+          "examples_raw": "Patient unable to use online services, no alternative offered, e-consult only with no phone option",
+          "typical_actions_raw": "Ensure non-digital pathway, patient support, process review",
+          "examples": ["Patient unable to use online services", "no alternative offered", "e-consult only with no phone option"],
+          "typical_actions": ["Ensure non-digital pathway", "patient support", "process review"]
+        },
+        {
+          "id": "discrimination-concern",
+          "name": "Discrimination Concern",
+          "examples_raw": "Patient or staff reports discriminatory behaviour based on protected characteristic",
+          "typical_actions_raw": "Investigation, support for affected person, HR/clinical lead involvement, training",
+          "examples": ["Patient or staff reports discriminatory behaviour based on protected characteristic"],
+          "typical_actions": ["Investigation", "support for affected person", "HR/clinical lead involvement", "training"]
+        },
+        {
+          "id": "appointment-access-barrier",
+          "name": "Appointment Access Barrier",
+          "examples_raw": "Unable to get appointment within clinical need, DNA due to access issue, carer not accommodated",
+          "typical_actions_raw": "Capacity review, pathway adjustment, patient follow-up",
+          "examples": ["Unable to get appointment within clinical need", "DNA due to access issue", "carer not accommodated"],
+          "typical_actions": ["Capacity review", "pathway adjustment", "patient follow-up"]
+        },
+        {
+          "id": "health-inequality-identified",
+          "name": "Health Inequality Identified",
+          "examples_raw": "Screening uptake gap in demographic group, outcomes disparity noted, outreach needed",
+          "typical_actions_raw": "Population health review, targeted intervention, PCN liaison",
+          "examples": ["Screening uptake gap in demographic group", "outcomes disparity noted", "outreach needed"],
+          "typical_actions": ["Population health review", "targeted intervention", "PCN liaison"]
+        }
+      ]
+    },
+    {
+      "id": "external-alerts-guidance",
+      "name": "External Alerts & Guidance",
+      "cqc_domain": "Effective, Safe",
+      "event_types": [
+        {
+          "id": "mhra-alerts",
+          "name": "MHRA Alerts",
+          "examples_raw": "Drug/device safety",
+          "typical_actions_raw": "Patient search, recalls, clinical review",
+          "examples": ["Drug/device safety"],
+          "typical_actions": ["Patient search", "recalls", "clinical review"]
+        },
+        {
+          "id": "cas-alerts",
+          "name": "CAS Alerts",
+          "examples_raw": "Central Alerting System",
+          "typical_actions_raw": "Assess relevance, implement actions, confirm",
+          "examples": ["Central Alerting System"],
+          "typical_actions": ["Assess relevance", "implement actions", "confirm"]
+        },
+        {
+          "id": "nice-guidance",
+          "name": "NICE Guidance",
+          "examples_raw": "New/updated guidelines",
+          "typical_actions_raw": "Review practice, update protocols, training",
+          "examples": ["New/updated guidelines"],
+          "typical_actions": ["Review practice", "update protocols", "training"]
+        },
+        {
+          "id": "public-health-alerts",
+          "name": "Public Health Alerts",
+          "examples_raw": "UKHSA, local public health",
+          "typical_actions_raw": "Patient identification, outbreak response",
+          "examples": ["UKHSA", "local public health"],
+          "typical_actions": ["Patient identification", "outbreak response"]
+        },
+        {
+          "id": "nhs-england-comms",
+          "name": "NHS England Comms",
+          "examples_raw": "National directives",
+          "typical_actions_raw": "Implementation planning, compliance",
+          "examples": ["National directives"],
+          "typical_actions": ["Implementation planning", "compliance"]
+        },
+        {
+          "id": "icb-ics-directives",
+          "name": "ICB/ICS Directives",
+          "examples_raw": "Local commissioning",
+          "typical_actions_raw": "Service changes, pathway updates",
+          "examples": ["Local commissioning"],
+          "typical_actions": ["Service changes", "pathway updates"]
+        },
+        {
+          "id": "bnf-updates",
+          "name": "BNF Updates",
+          "examples_raw": "Formulary changes",
+          "typical_actions_raw": "Prescribing review, system updates",
+          "examples": ["Formulary changes"],
+          "typical_actions": ["Prescribing review", "system updates"]
+        },
+        {
+          "id": "gmc-nmc-guidance",
+          "name": "GMC/NMC Guidance",
+          "examples_raw": "Professional standards",
+          "typical_actions_raw": "Staff briefing, policy updates",
+          "examples": ["Professional standards"],
+          "typical_actions": ["Staff briefing", "policy updates"]
+        },
+        {
+          "id": "coroner-regulation-28",
+          "name": "Coroner Regulation 28 (Prevention of Future Deaths)",
+          "examples_raw": "Report directed to practice requiring action to prevent future deaths",
+          "typical_actions_raw": "Formal response, action plan, evidence of changes, deadline compliance",
+          "examples": ["Report directed to practice requiring action to prevent future deaths"],
+          "typical_actions": ["Formal response", "action plan", "evidence of changes", "deadline compliance"]
+        }
+      ]
+    },
+    {
+      "id": "infrastructure-it",
+      "name": "Infrastructure & IT",
+      "cqc_domain": "Safe",
+      "event_types": [
+        {
+          "id": "phone-system-outage",
+          "name": "Phone System Outage",
+          "examples_raw": "Lines down, queue failures",
+          "typical_actions_raw": "Backup procedures, provider escalation, patient comms",
+          "examples": ["Lines down", "queue failures"],
+          "typical_actions": ["Backup procedures", "provider escalation", "patient comms"]
+        },
+        {
+          "id": "clinical-system-downtime",
+          "name": "Clinical System Downtime",
+          "examples_raw": "EMIS/SystmOne unavailable",
+          "typical_actions_raw": "Business continuity, paper backup, catch-up process",
+          "examples": ["EMIS/SystmOne unavailable"],
+          "typical_actions": ["Business continuity", "paper backup", "catch-up process"]
+        },
+        {
+          "id": "internet-outage",
+          "name": "Internet Outage",
+          "examples_raw": "Connectivity lost",
+          "typical_actions_raw": "Mobile backup, prioritize urgent work",
+          "examples": ["Connectivity lost"],
+          "typical_actions": ["Mobile backup", "prioritize urgent work"]
+        },
+        {
+          "id": "medical-equipment-failure",
+          "name": "Medical Equipment Failure",
+          "examples_raw": "ECG, BP monitor, fridge",
+          "typical_actions_raw": "Repair/replace, calibration, patient rescheduling",
+          "examples": ["ECG", "BP monitor", "fridge"],
+          "typical_actions": ["Repair/replace", "calibration", "patient rescheduling"]
+        },
+        {
+          "id": "vaccine-fridge-breach",
+          "name": "Vaccine Fridge Breach",
+          "examples_raw": "Temperature excursion",
+          "typical_actions_raw": "Stock assessment, PHE guidance, wastage recording",
+          "examples": ["Temperature excursion"],
+          "typical_actions": ["Stock assessment", "PHE guidance", "wastage recording"]
+        },
+        {
+          "id": "security-system-failure",
+          "name": "Security System Failure",
+          "examples_raw": "Alarms, CCTV, access control",
+          "typical_actions_raw": "Temporary measures, urgent repair",
+          "examples": ["Alarms", "CCTV", "access control"],
+          "typical_actions": ["Temporary measures", "urgent repair"]
+        },
+        {
+          "id": "panic-button-duress-alarm-failure",
+          "name": "Panic Button / Duress Alarm Failure",
+          "examples_raw": "Panic button not working in consulting room, duress alarm battery dead",
+          "typical_actions_raw": "Immediate repair, temporary alternative, risk assessment, restrict room use",
+          "examples": ["Panic button not working in consulting room", "duress alarm battery dead"],
+          "typical_actions": ["Immediate repair", "temporary alternative", "risk assessment", "restrict room use"]
+        },
+        {
+          "id": "emergency-equipment-failure",
+          "name": "Emergency Equipment Failure",
+          "examples_raw": "Defibrillator fault, oxygen cylinder empty, anaphylaxis kit expired",
+          "typical_actions_raw": "Immediate replacement, equipment check schedule review, staff notification",
+          "examples": ["Defibrillator fault", "oxygen cylinder empty", "anaphylaxis kit expired"],
+          "typical_actions": ["Immediate replacement", "equipment check schedule review", "staff notification"]
+        },
+        {
+          "id": "premises-access-failure",
+          "name": "Premises Access Failure",
+          "examples_raw": "Locked out of building, key safe failure, alarm preventing entry",
+          "typical_actions_raw": "Emergency locksmith, backup key holders, alarm company contact",
+          "examples": ["Locked out of building", "key safe failure", "alarm preventing entry"],
+          "typical_actions": ["Emergency locksmith", "backup key holders", "alarm company contact"]
+        }
+      ]
+    },
+    {
+      "id": "external-service-disruptions",
+      "name": "External Service Disruptions",
+      "cqc_domain": "Responsive",
+      "event_types": [
+        {
+          "id": "secondary-care-disruption",
+          "name": "Secondary Care Disruption",
+          "examples_raw": "Hospital clinic closures, pathway changes, referral pathway suspended/moved",
+          "typical_actions_raw": "Update referral processes, alternative pathways, urgent case escalation, patient communication",
+          "examples": ["Hospital clinic closures", "pathway changes", "referral pathway suspended/moved"],
+          "typical_actions": ["Update referral processes", "alternative pathways", "urgent case escalation", "patient communication"]
+        },
+        {
+          "id": "lab-service-disruption",
+          "name": "Lab Service Disruption",
+          "examples_raw": "Delayed results, service changes",
+          "typical_actions_raw": "Alternative arrangements, prioritize urgent tests",
+          "examples": ["Delayed results", "service changes"],
+          "typical_actions": ["Alternative arrangements", "prioritize urgent tests"]
+        },
+        {
+          "id": "pharmacy-issues",
+          "name": "Pharmacy Issues",
+          "examples_raw": "Stock shortages, dispensing delays",
+          "typical_actions_raw": "Alternative suppliers, patient communication",
+          "examples": ["Stock shortages", "dispensing delays"],
+          "typical_actions": ["Alternative suppliers", "patient communication"]
+        },
+        {
+          "id": "interpreter-service-failure",
+          "name": "Interpreter Service Failure",
+          "examples_raw": "No interpreter available",
+          "typical_actions_raw": "Reschedule, family interpreter (with consent), phone service",
+          "examples": ["No interpreter available"],
+          "typical_actions": ["Reschedule", "family interpreter (with consent)", "phone service"]
+        },
+        {
+          "id": "transport-courier-issues",
+          "name": "Transport/Courier Issues",
+          "examples_raw": "Specimen collection delays",
+          "typical_actions_raw": "Alternative arrangements, urgent sample handling",
+          "examples": ["Specimen collection delays"],
+          "typical_actions": ["Alternative arrangements", "urgent sample handling"]
+        },
+        {
+          "id": "111-999-overload",
+          "name": "111/999 Overload",
+          "examples_raw": "Extended waits, diversions",
+          "typical_actions_raw": "Direct patient guidance, safety netting",
+          "examples": ["Extended waits", "diversions"],
+          "typical_actions": ["Direct patient guidance", "safety netting"]
+        },
+        {
+          "id": "community-service-gaps",
+          "name": "Community Service Gaps",
+          "examples_raw": "District nursing, physio delays",
+          "typical_actions_raw": "Escalation, interim practice support",
+          "examples": ["District nursing", "physio delays"],
+          "typical_actions": ["Escalation", "interim practice support"]
+        },
+        {
+          "id": "mental-health-service-unavailability",
+          "name": "Mental Health Service Unavailability",
+          "examples_raw": "CMHT unavailable, crisis team delays, IAPT waiting list excessive",
+          "typical_actions_raw": "Direct escalation, safety planning, A&E if needed",
+          "examples": ["CMHT unavailable", "crisis team delays", "IAPT waiting list excessive"],
+          "typical_actions": ["Direct escalation", "safety planning", "A&E if needed"]
+        },
+        {
+          "id": "social-care-delays",
+          "name": "Social Care Delays",
+          "examples_raw": "Care package delays, safeguarding response",
+          "typical_actions_raw": "Escalation, interim support, documentation",
+          "examples": ["Care package delays", "safeguarding response"],
+          "typical_actions": ["Escalation", "interim support", "documentation"]
+        }
+      ]
+    },
+    {
+      "id": "infection-control-outbreaks",
+      "name": "Infection Control & Outbreaks",
+      "cqc_domain": "Safe",
+      "event_types": [
+        {
+          "id": "notifiable-disease",
+          "name": "Notifiable Disease",
+          "examples_raw": "TB, measles, meningitis",
+          "typical_actions_raw": "PHE notification, contact tracing, outbreak team",
+          "examples": ["TB", "measles", "meningitis"],
+          "typical_actions": ["PHE notification", "contact tracing", "outbreak team"]
+        },
+        {
+          "id": "practice-outbreak",
+          "name": "Practice Outbreak",
+          "examples_raw": "Flu, COVID, gastroenteritis",
+          "typical_actions_raw": "Infection control measures, staff testing, deep clean",
+          "examples": ["Flu", "COVID", "gastroenteritis"],
+          "typical_actions": ["Infection control measures", "staff testing", "deep clean"]
+        },
+        {
+          "id": "needlestick-injury",
+          "name": "Needlestick Injury",
+          "examples_raw": "Sharps injury to staff",
+          "typical_actions_raw": "Occupational health, PEP assessment, source testing",
+          "examples": ["Sharps injury to staff"],
+          "typical_actions": ["Occupational health", "PEP assessment", "source testing"]
+        },
+        {
+          "id": "contamination-incident",
+          "name": "Contamination Incident",
+          "examples_raw": "Blood/body fluid spill",
+          "typical_actions_raw": "Immediate clean, exposure assessment",
+          "examples": ["Blood/body fluid spill"],
+          "typical_actions": ["Immediate clean", "exposure assessment"]
+        },
+        {
+          "id": "ppe-stock-issues",
+          "name": "PPE Stock Issues",
+          "examples_raw": "Masks, gloves unavailable",
+          "typical_actions_raw": "Emergency procurement, conservation measures",
+          "examples": ["Masks", "gloves unavailable"],
+          "typical_actions": ["Emergency procurement", "conservation measures"]
+        },
+        {
+          "id": "sterilization-failure",
+          "name": "Sterilization Failure",
+          "examples_raw": "Autoclave malfunction",
+          "typical_actions_raw": "Equipment quarantine, reprocessing, maintenance",
+          "examples": ["Autoclave malfunction"],
+          "typical_actions": ["Equipment quarantine", "reprocessing", "maintenance"]
+        },
+        {
+          "id": "ipc-audit-non-compliance",
+          "name": "IPC Audit Non-Compliance",
+          "examples_raw": "IPC audit identifies failing, cleaning standards below threshold",
+          "typical_actions_raw": "Action plan for deficiency, re-audit date, IPC lead review, staff training",
+          "examples": ["IPC audit identifies failing", "cleaning standards below threshold"],
+          "typical_actions": ["Action plan for deficiency", "re-audit date", "IPC lead review", "staff training"]
+        },
+        {
+          "id": "clinical-waste-incident",
+          "name": "Clinical Waste Incident",
+          "examples_raw": "Improper disposal, missed collection, clinical waste overflow",
+          "typical_actions_raw": "Correct disposal, contractor contact, storage review, staff briefing",
+          "examples": ["Improper disposal", "missed collection", "clinical waste overflow"],
+          "typical_actions": ["Correct disposal", "contractor contact", "storage review", "staff briefing"]
+        },
+        {
+          "id": "hand-hygiene-non-compliance",
+          "name": "Hand Hygiene Non-Compliance",
+          "examples_raw": "Staff not following hand hygiene protocol, hand sanitiser dispensers empty",
+          "typical_actions_raw": "Staff reminder, restock supplies, audit hand hygiene compliance, training",
+          "examples": ["Staff not following hand hygiene protocol", "hand sanitiser dispensers empty"],
+          "typical_actions": ["Staff reminder", "restock supplies", "audit hand hygiene compliance", "training"]
+        }
+      ]
+    },
+    {
+      "id": "prescribing-medicines",
+      "name": "Prescribing & Medicines",
+      "cqc_domain": "Safe, Effective",
+      "event_types": [
+        {
+          "id": "drug-shortage",
+          "name": "Drug Shortage",
+          "examples_raw": "Manufacturer supply issue",
+          "typical_actions_raw": "Alternative prescribing, patient notification",
+          "examples": ["Manufacturer supply issue"],
+          "typical_actions": ["Alternative prescribing", "patient notification"]
+        },
+        {
+          "id": "drug-recall",
+          "name": "Drug Recall",
+          "examples_raw": "Batch recall from MHRA",
+          "typical_actions_raw": "Patient identification, replacement supply",
+          "examples": ["Batch recall from MHRA"],
+          "typical_actions": ["Patient identification", "replacement supply"]
+        },
+        {
+          "id": "controlled-drug-discrepancy",
+          "name": "Controlled Drug Discrepancy",
+          "examples_raw": "Stock doesn't match register",
+          "typical_actions_raw": "Investigation, police if theft suspected",
+          "examples": ["Stock doesn't match register"],
+          "typical_actions": ["Investigation", "police if theft suspected"]
+        },
+        {
+          "id": "prescription-fraud",
+          "name": "Prescription Fraud",
+          "examples_raw": "Forged/altered prescriptions",
+          "typical_actions_raw": "Police, pharmacy alert, patient review",
+          "examples": ["Forged/altered prescriptions"],
+          "typical_actions": ["Police", "pharmacy alert", "patient review"]
+        },
+        {
+          "id": "formulary-change",
+          "name": "Formulary Change",
+          "examples_raw": "Drug removed/added to formulary",
+          "typical_actions_raw": "Prescribing switches, patient reviews",
+          "examples": ["Drug removed/added to formulary"],
+          "typical_actions": ["Prescribing switches", "patient reviews"]
+        },
+        {
+          "id": "new-drug-interaction",
+          "name": "New Drug Interaction",
+          "examples_raw": "Safety signal identified",
+          "typical_actions_raw": "Patient search, prescription review",
+          "examples": ["Safety signal identified"],
+          "typical_actions": ["Patient search", "prescription review"]
+        },
+        {
+          "id": "high-risk-medication-review-overdue",
+          "name": "High-Risk Medication Review Overdue",
+          "examples_raw": "Lithium monitoring lapsed, methotrexate bloods overdue, warfarin INR not checked",
+          "typical_actions_raw": "Urgent patient contact, arrange monitoring, clinical review, system alert setup",
+          "examples": ["Lithium monitoring lapsed", "methotrexate bloods overdue", "warfarin INR not checked"],
+          "typical_actions": ["Urgent patient contact", "arrange monitoring", "clinical review", "system alert setup"]
+        },
+        {
+          "id": "repeat-prescribing-error",
+          "name": "Repeat Prescribing Error",
+          "examples_raw": "Repeat authorised without review, stopped medication still issuing, dosage drift over repeats",
+          "typical_actions_raw": "Prescription correction, patient contact, repeat authorisation audit, system review",
+          "examples": ["Repeat authorised without review", "stopped medication still issuing", "dosage drift over repeats"],
+          "typical_actions": ["Prescription correction", "patient contact", "repeat authorisation audit", "system review"]
+        }
+      ]
+    },
+    {
+      "id": "staffing-hr-events",
+      "name": "Staffing & HR Events",
+      "cqc_domain": "Well-led",
+      "event_types": [
+        {
+          "id": "staff-injury-at-work",
+          "name": "Staff Injury at Work",
+          "examples_raw": "Slip, manual handling, assault",
+          "typical_actions_raw": "First aid, RIDDOR if needed, risk assessment",
+          "examples": ["Slip", "manual handling", "assault"],
+          "typical_actions": ["First aid", "RIDDOR if needed", "risk assessment"]
+        },
+        {
+          "id": "sickness-patterns",
+          "name": "Sickness Patterns",
+          "examples_raw": "Unusual absence, stress-related",
+          "typical_actions_raw": "Support, occupational health, workload review",
+          "examples": ["Unusual absence", "stress-related"],
+          "typical_actions": ["Support", "occupational health", "workload review"]
+        },
+        {
+          "id": "training-non-compliance",
+          "name": "Training Non-Compliance",
+          "examples_raw": "Mandatory training lapsed",
+          "typical_actions_raw": "Schedule training, restrict duties if needed",
+          "examples": ["Mandatory training lapsed"],
+          "typical_actions": ["Schedule training", "restrict duties if needed"]
+        },
+        {
+          "id": "registration-lapse",
+          "name": "Registration Lapse",
+          "examples_raw": "GMC/NMC revalidation due",
+          "typical_actions_raw": "Urgent revalidation, restrict practice",
+          "examples": ["GMC/NMC revalidation due"],
+          "typical_actions": ["Urgent revalidation", "restrict practice"]
+        },
+        {
+          "id": "dbs-expiry",
+          "name": "DBS Expiry",
+          "examples_raw": "Renewal due/overdue",
+          "typical_actions_raw": "Renewal application, chaperone restrictions",
+          "examples": ["Renewal due/overdue"],
+          "typical_actions": ["Renewal application", "chaperone restrictions"]
+        },
+        {
+          "id": "professional-conduct",
+          "name": "Professional Conduct",
+          "examples_raw": "Performance concerns",
+          "typical_actions_raw": "Support, supervision, formal processes",
+          "examples": ["Performance concerns"],
+          "typical_actions": ["Support", "supervision", "formal processes"]
+        },
+        {
+          "id": "whistleblowing",
+          "name": "Whistleblowing",
+          "examples_raw": "Staff raises concerns",
+          "typical_actions_raw": "Protected disclosure process, investigation",
+          "examples": ["Staff raises concerns"],
+          "typical_actions": ["Protected disclosure process", "investigation"]
+        },
+        {
+          "id": "staffing-shortage-unsafe-staffing",
+          "name": "Staffing Shortage / Unsafe Staffing",
+          "examples_raw": "Staffing falls below safe minimum, no GP available for urgent slots, single-handed working",
+          "typical_actions_raw": "Locum arrangement, session reduction, risk assessment, escalation",
+          "examples": ["Staffing falls below safe minimum", "no GP available for urgent slots", "single-handed working"],
+          "typical_actions": ["Locum arrangement", "session reduction", "risk assessment", "escalation"]
+        },
+        {
+          "id": "staff-wellbeing-concern",
+          "name": "Staff Wellbeing Concern",
+          "examples_raw": "Burnout identified, stress-related concern, team morale issue",
+          "typical_actions_raw": "Wellbeing support, workload review, occupational health, FTSUG",
+          "examples": ["Burnout identified", "stress-related concern", "team morale issue"],
+          "typical_actions": ["Wellbeing support", "workload review", "occupational health", "FTSUG"]
+        },
+        {
+          "id": "induction-failure",
+          "name": "Induction Failure",
+          "examples_raw": "New starter not properly inducted, locum unfamiliar with systems/protocols",
+          "typical_actions_raw": "Immediate induction catch-up, supervision, checklist review",
+          "examples": ["New starter not properly inducted", "locum unfamiliar with systems/protocols"],
+          "typical_actions": ["Immediate induction catch-up", "supervision", "checklist review"]
+        },
+        {
+          "id": "chaperone-unavailability",
+          "name": "Chaperone Unavailability",
+          "examples_raw": "No trained chaperone available for intimate examination",
+          "typical_actions_raw": "Reschedule examination, arrange alternative chaperone, review chaperone rota",
+          "examples": ["No trained chaperone available for intimate examination"],
+          "typical_actions": ["Reschedule examination", "arrange alternative chaperone", "review chaperone rota"]
+        }
+      ]
+    },
+    {
+      "id": "information-governance",
+      "name": "Information Governance",
+      "cqc_domain": "Safe, Well-led",
+      "event_types": [
+        {
+          "id": "data-breach",
+          "name": "Data Breach",
+          "examples_raw": "Records sent to wrong person, lost laptop",
+          "typical_actions_raw": "ICO assessment, patient notification, mitigation",
+          "examples": ["Records sent to wrong person", "lost laptop"],
+          "typical_actions": ["ICO assessment", "patient notification", "mitigation"]
+        },
+        {
+          "id": "cyber-incident",
+          "name": "Cyber Incident",
+          "examples_raw": "Phishing, ransomware attempt, unauthorized access",
+          "typical_actions_raw": "IT security response, reporting, recovery",
+          "examples": ["Phishing", "ransomware attempt", "unauthorized access"],
+          "typical_actions": ["IT security response", "reporting", "recovery"]
+        },
+        {
+          "id": "subject-access-request",
+          "name": "Subject Access Request",
+          "examples_raw": "Patient requests their records",
+          "typical_actions_raw": "30-day response, redaction review",
+          "examples": ["Patient requests their records"],
+          "typical_actions": ["30-day response", "redaction review"]
+        },
+        {
+          "id": "foi-request",
+          "name": "FOI Request",
+          "examples_raw": "Information request",
+          "typical_actions_raw": "20-day response, exemption review",
+          "examples": ["Information request"],
+          "typical_actions": ["20-day response", "exemption review"]
+        },
+        {
+          "id": "system-access-issue",
+          "name": "System Access Issue",
+          "examples_raw": "Unauthorized access, password sharing",
+          "typical_actions_raw": "Access review, disciplinary if needed",
+          "examples": ["Unauthorized access", "password sharing"],
+          "typical_actions": ["Access review", "disciplinary if needed"]
+        },
+        {
+          "id": "record-keeping-failures",
+          "name": "Record Keeping Failures",
+          "examples_raw": "Missing documentation, poor notes",
+          "typical_actions_raw": "Training, audit, template improvements",
+          "examples": ["Missing documentation", "poor notes"],
+          "typical_actions": ["Training", "audit", "template improvements"]
+        },
+        {
+          "id": "confidentiality-breach-verbal",
+          "name": "Confidentiality Breach (Verbal)",
+          "examples_raw": "Overheard conversation, patient information discussed in public area, screen visible to others",
+          "typical_actions_raw": "Staff reminder, environment review, screen positioning, privacy audit",
+          "examples": ["Overheard conversation", "patient information discussed in public area", "screen visible to others"],
+          "typical_actions": ["Staff reminder", "environment review", "screen positioning", "privacy audit"]
+        },
+        {
+          "id": "consent-to-share-failure",
+          "name": "Consent to Share Failure",
+          "examples_raw": "Information shared without consent, not shared when it should have been",
+          "typical_actions_raw": "Consent review, patient notification, process correction, IG lead review",
+          "examples": ["Information shared without consent", "not shared when it should have been"],
+          "typical_actions": ["Consent review", "patient notification", "process correction", "IG lead review"]
+        },
+        {
+          "id": "dspt-non-compliance",
+          "name": "DSPT Non-Compliance",
+          "examples_raw": "Data Security & Protection Toolkit item failing, evidence gap",
+          "typical_actions_raw": "Action plan, evidence gathering, IG lead escalation, deadline tracking",
+          "examples": ["Data Security & Protection Toolkit item failing", "evidence gap"],
+          "typical_actions": ["Action plan", "evidence gathering", "IG lead escalation", "deadline tracking"]
+        }
+      ]
+    },
+    {
+      "id": "safeguarding",
+      "name": "Safeguarding",
+      "cqc_domain": "Safe",
+      "event_types": [
+        {
+          "id": "child-protection-concern",
+          "name": "Child Protection Concern",
+          "examples_raw": "Disclosure, visible injury, neglect signs",
+          "typical_actions_raw": "MASH referral, documentation, liaison",
+          "examples": ["Disclosure", "visible injury", "neglect signs"],
+          "typical_actions": ["MASH referral", "documentation", "liaison"]
+        },
+        {
+          "id": "adult-safeguarding",
+          "name": "Adult Safeguarding",
+          "examples_raw": "Vulnerable adult at risk",
+          "typical_actions_raw": "Social services referral, capacity assessment",
+          "examples": ["Vulnerable adult at risk"],
+          "typical_actions": ["Social services referral", "capacity assessment"]
+        },
+        {
+          "id": "domestic-violence-abuse",
+          "name": "Domestic Violence / Abuse",
+          "examples_raw": "Disclosure or suspicion, patient discloses abuse",
+          "typical_actions_raw": "Safety planning, MARAC referral if high risk, safeguarding referral, documentation",
+          "examples": ["Disclosure or suspicion", "patient discloses abuse"],
+          "typical_actions": ["Safety planning", "MARAC referral if high risk", "safeguarding referral", "documentation"]
+        },
+        {
+          "id": "fgm-concern",
+          "name": "FGM Concern",
+          "examples_raw": "Disclosure or risk identified",
+          "typical_actions_raw": "Mandatory reporting, safeguarding referral",
+          "examples": ["Disclosure or risk identified"],
+          "typical_actions": ["Mandatory reporting", "safeguarding referral"]
+        },
+        {
+          "id": "prevent-concern",
+          "name": "Prevent Concern",
+          "examples_raw": "Radicalization indicators",
+          "typical_actions_raw": "Prevent referral, documentation",
+          "examples": ["Radicalization indicators"],
+          "typical_actions": ["Prevent referral", "documentation"]
+        },
+        {
+          "id": "modern-slavery",
+          "name": "Modern Slavery",
+          "examples_raw": "Trafficking/exploitation signs",
+          "typical_actions_raw": "Police/safeguarding, NRM referral",
+          "examples": ["Trafficking/exploitation signs"],
+          "typical_actions": ["Police/safeguarding", "NRM referral"]
+        },
+        {
+          "id": "safeguarding-dna",
+          "name": "Safeguarding DNA",
+          "examples_raw": "Child or vulnerable adult DNAs appointment, repeated non-attendance",
+          "typical_actions_raw": "Follow DNA protocol, assess risk, contact patient/carer, consider safeguarding referral",
+          "examples": ["Child or vulnerable adult DNAs appointment", "repeated non-attendance"],
+          "typical_actions": ["Follow DNA protocol", "assess risk", "contact patient/carer", "consider safeguarding referral"]
+        },
+        {
+          "id": "looked-after-children-concern",
+          "name": "Looked After Children (LAC) Concern",
+          "examples_raw": "Health assessment delays, placement issues, missed reviews",
+          "typical_actions_raw": "Liaise with social worker, arrange assessment, update care plan",
+          "examples": ["Health assessment delays", "placement issues", "missed reviews"],
+          "typical_actions": ["Liaise with social worker", "arrange assessment", "update care plan"]
+        },
+        {
+          "id": "mental-capacity-concern",
+          "name": "Mental Capacity Concern",
+          "examples_raw": "Patient lacks capacity for decision, IMCA needed, best interests decision required",
+          "typical_actions_raw": "Capacity assessment, best interests meeting, IMCA referral, documentation",
+          "examples": ["Patient lacks capacity for decision", "IMCA needed", "best interests decision required"],
+          "typical_actions": ["Capacity assessment", "best interests meeting", "IMCA referral", "documentation"]
+        },
+        {
+          "id": "self-harm-suicide-risk",
+          "name": "Self-Harm / Suicide Risk",
+          "examples_raw": "Patient presents with self-harm, suicidal ideation disclosed, crisis presentation",
+          "typical_actions_raw": "Immediate safety assessment, crisis team referral, safety plan, follow-up arrangement",
+          "examples": ["Patient presents with self-harm", "suicidal ideation disclosed", "crisis presentation"],
+          "typical_actions": ["Immediate safety assessment", "crisis team referral", "safety plan", "follow-up arrangement"]
+        },
+        {
+          "id": "marac-referral",
+          "name": "MARAC Referral",
+          "examples_raw": "High-risk domestic abuse case requiring multi-agency response",
+          "typical_actions_raw": "Complete DASH-RIC, submit MARAC referral, attend conference, implement actions",
+          "examples": ["High-risk domestic abuse case requiring multi-agency response"],
+          "typical_actions": ["Complete DASH-RIC", "submit MARAC referral", "attend conference", "implement actions"]
+        }
+      ]
+    },
+    {
+      "id": "premises-environment-facilities",
+      "name": "Premises, Environment & Facilities",
+      "cqc_domain": "Safe",
+      "event_types": [
+        {
+          "id": "fire-alarm-activation",
+          "name": "Fire Alarm Activation",
+          "examples_raw": "Alarm triggered, evacuation",
+          "typical_actions_raw": "Investigation, reset, fire service if needed",
+          "examples": ["Alarm triggered", "evacuation"],
+          "typical_actions": ["Investigation", "reset", "fire service if needed"]
+        },
+        {
+          "id": "building-issues",
+          "name": "Building Issues",
+          "examples_raw": "Heating failure, water leak, power cut",
+          "typical_actions_raw": "Emergency repairs, patient safety, session relocation",
+          "examples": ["Heating failure", "water leak", "power cut"],
+          "typical_actions": ["Emergency repairs", "patient safety", "session relocation"]
+        },
+        {
+          "id": "hazardous-spill",
+          "name": "Hazardous Spill",
+          "examples_raw": "Chemical, clinical waste",
+          "typical_actions_raw": "Spill kit, area isolation, disposal",
+          "examples": ["Chemical", "clinical waste"],
+          "typical_actions": ["Spill kit", "area isolation", "disposal"]
+        },
+        {
+          "id": "legionella-risk",
+          "name": "Legionella Risk",
+          "examples_raw": "Water system concerns",
+          "typical_actions_raw": "Testing, flushing regime, remediation",
+          "examples": ["Water system concerns"],
+          "typical_actions": ["Testing", "flushing regime", "remediation"]
+        },
+        {
+          "id": "asbestos-disturbance",
+          "name": "Asbestos Disturbance",
+          "examples_raw": "During maintenance/repairs",
+          "typical_actions_raw": "Specialist assessment, area closure",
+          "examples": ["During maintenance/repairs"],
+          "typical_actions": ["Specialist assessment", "area closure"]
+        },
+        {
+          "id": "pest-infestation",
+          "name": "Pest Infestation",
+          "examples_raw": "Rodents, insects",
+          "typical_actions_raw": "Pest control, stock check, deep clean",
+          "examples": ["Rodents", "insects"],
+          "typical_actions": ["Pest control", "stock check", "deep clean"]
+        },
+        {
+          "id": "slip-trip-hazard",
+          "name": "Slip/Trip Hazard",
+          "examples_raw": "Wet floor, loose carpet, obstructed corridor",
+          "typical_actions_raw": "Immediate hazard removal, warning signage, repair, risk assessment update",
+          "examples": ["Wet floor", "loose carpet", "obstructed corridor"],
+          "typical_actions": ["Immediate hazard removal", "warning signage", "repair", "risk assessment update"]
+        },
+        {
+          "id": "temperature-non-compliance",
+          "name": "Temperature Non-Compliance",
+          "examples_raw": "Room too hot/cold for clinical use, waiting area uncomfortable",
+          "typical_actions_raw": "HVAC check, temporary measures, session relocation if needed",
+          "examples": ["Room too hot/cold for clinical use", "waiting area uncomfortable"],
+          "typical_actions": ["HVAC check", "temporary measures", "session relocation if needed"]
+        },
+        {
+          "id": "cleaning-standards-failure",
+          "name": "Cleaning Standards Failure",
+          "examples_raw": "Cleaner did not attend, standards below acceptable, clinical areas not cleaned",
+          "typical_actions_raw": "Contractor contact, interim clean, IPC lead review, contract review",
+          "examples": ["Cleaner did not attend", "standards below acceptable", "clinical areas not cleaned"],
+          "typical_actions": ["Contractor contact", "interim clean", "IPC lead review", "contract review"]
+        },
+        {
+          "id": "waste-disposal-issue",
+          "name": "Waste Disposal Issue",
+          "examples_raw": "Confidential waste collection missed, clinical waste overflow, incorrect segregation",
+          "typical_actions_raw": "Contractor contact, secure storage, correct segregation, staff reminder",
+          "examples": ["Confidential waste collection missed", "clinical waste overflow", "incorrect segregation"],
+          "typical_actions": ["Contractor contact", "secure storage", "correct segregation", "staff reminder"]
+        },
+        {
+          "id": "signage-wayfinding-issue",
+          "name": "Signage / Wayfinding Issue",
+          "examples_raw": "Missing fire exit signs, no accessible signage, out-of-date information displayed",
+          "typical_actions_raw": "Replace signage, accessibility review, fire safety check",
+          "examples": ["Missing fire exit signs", "no accessible signage", "out-of-date information displayed"],
+          "typical_actions": ["Replace signage", "accessibility review", "fire safety check"]
+        },
+        {
+          "id": "building-maintenance-overdue",
+          "name": "Building Maintenance Overdue",
+          "examples_raw": "PAT testing overdue, fire extinguisher service lapsed, gas safety expired",
+          "typical_actions_raw": "Schedule urgent maintenance, risk assessment, contractor booking, compliance log update",
+          "examples": ["PAT testing overdue", "fire extinguisher service lapsed", "gas safety expired"],
+          "typical_actions": ["Schedule urgent maintenance", "risk assessment", "contractor booking", "compliance log update"]
+        }
+      ]
+    }
+  ],
+  "priority_matrix": [
+    {
+      "priority": "**Critical**",
+      "response_time": "Immediate",
+      "examples": "Violence, data breach, system down, safeguarding, accessibility barrier preventing care"
+    },
+    {
+      "priority": "**High**",
+      "response_time": "Within 24 hours",
+      "examples": "SEA, formal complaint, drug shortage, service disruption, discrimination concern"
+    },
+    {
+      "priority": "**Medium**",
+      "response_time": "Within 1 week",
+      "examples": "Near miss, training lapse, minor equipment failure, online review concern, IPC audit gap"
+    },
+    {
+      "priority": "**Low**",
+      "response_time": "Within 1 month",
+      "examples": "Compliment logging, minor process issues, health inequality noted for review, maintenance scheduling"
+    }
+  ],
+  "external_reporting_requirements": [
+    {
+      "event_type": "Serious Incidents",
+      "report_to": "LFPSE (Learn from Patient Safety Events)",
+      "timeframe": "2 working days"
+    },
+    {
+      "event_type": "Data Breaches (significant)",
+      "report_to": "ICO",
+      "timeframe": "72 hours"
+    },
+    {
+      "event_type": "RIDDOR injuries",
+      "report_to": "HSE",
+      "timeframe": "10-15 days"
+    },
+    {
+      "event_type": "Notifiable diseases",
+      "report_to": "UKHSA",
+      "timeframe": "Immediate"
+    },
+    {
+      "event_type": "Safeguarding (children)",
+      "report_to": "Local Authority MASH",
+      "timeframe": "Immediate"
+    },
+    {
+      "event_type": "Deaths in custody/care",
+      "report_to": "Coroner",
+      "timeframe": "Immediate"
+    },
+    {
+      "event_type": "Controlled drug concerns",
+      "report_to": "Police/CQC",
+      "timeframe": "Varies"
+    },
+    {
+      "event_type": "Never Events",
+      "report_to": "NHS England",
+      "timeframe": "Immediate"
+    },
+    {
+      "event_type": "FGM (under 18)",
+      "report_to": "Police (mandatory)",
+      "timeframe": "Immediate"
+    },
+    {
+      "event_type": "Equality Act / discrimination",
+      "report_to": "Internal investigation, EHRC if systemic",
+      "timeframe": "Within 1 week"
+    }
+  ]
+}

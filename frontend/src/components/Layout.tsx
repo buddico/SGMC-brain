@@ -1,5 +1,8 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
+import { api } from '@/api/client'
+import type { AlertItem } from '@/api/types'
 import {
   Brain,
   FileText,
@@ -25,6 +28,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { user } = useAuth()
   const location = useLocation()
 
+  const { data: pendingAlerts } = useQuery({
+    queryKey: ['pending-alerts'],
+    queryFn: () => api<AlertItem[]>('/alerts/my/pending'),
+    refetchInterval: 60_000, // poll every minute
+  })
+  const pendingCount = pendingAlerts?.length ?? 0
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
@@ -42,6 +52,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <nav className="flex-1 py-4">
           {NAV_ITEMS.map(({ path, label, icon: Icon }) => {
             const active = path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
+            const showBadge = path === '/alerts' && pendingCount > 0
             return (
               <Link
                 key={path}
@@ -54,6 +65,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
               >
                 <Icon className="w-4 h-4" />
                 {label}
+                {showBadge && (
+                  <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
+                    {pendingCount}
+                  </span>
+                )}
               </Link>
             )
           })}
